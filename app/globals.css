@@ -67,7 +67,7 @@ img { max-width: 100%; }
   margin-inline: auto;
   padding-inline: var(--page-pad);
 }
-.coverImage { object-fit: cover; image-rendering: auto; }
+.coverImage { object-fit: cover; image-rendering: auto; backface-visibility: hidden; }
 .eyebrow,
 .sectionKicker,
 .phaseEyebrow,
@@ -175,17 +175,33 @@ img { max-width: 100%; }
 /* Hero */
 .hero {
   position: relative;
+  height: 170svh;
+  background: #000;
+}
+.heroSticky {
+  position: sticky;
+  top: 0;
+  height: 100svh;
   min-height: 100svh;
   display: grid;
   place-items: center;
   overflow: hidden;
   background: #000;
+  isolation: isolate;
 }
-.heroMedia { position: absolute; inset: -2.5% 0; opacity: .8; will-change: transform; }
+.heroMedia {
+  position: absolute;
+  inset: -7% -5%;
+  transform-origin: 50% 50%;
+}
+.heroImage {
+  object-position: 50% 52%;
+}
 .heroOverlay {
   position: absolute;
   inset: 0;
-  background: linear-gradient(to top, rgba(0,0,0,.82), rgba(0,0,0,.28) 50%, rgba(0,0,0,.48));
+  background: linear-gradient(to top, rgba(0,0,0,.80), rgba(0,0,0,.22) 50%, rgba(0,0,0,.44));
+  pointer-events: none;
 }
 .heroContent {
   position: relative;
@@ -196,6 +212,7 @@ img { max-width: 100%; }
   display: flex;
   flex-direction: column;
   align-items: center;
+  transform-origin: center center;
 }
 .hero h1 {
   margin: 1.25rem 0 1.2rem;
@@ -214,6 +231,28 @@ img { max-width: 100%; }
   line-height: 1.67;
   font-weight: 300;
 }
+.heroScrollHint {
+  position: absolute;
+  z-index: 3;
+  left: 50%;
+  bottom: 1.35rem;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: .55rem;
+  color: rgba(255,255,255,.62);
+  font-size: .58rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: .12em;
+  pointer-events: none;
+}
+.heroScrollHint i {
+  width: 1px;
+  height: 2.4rem;
+  background: linear-gradient(to bottom, rgba(255,255,255,.85), rgba(255,255,255,.08));
+}
 .textAction {
   display: inline-flex;
   align-items: center;
@@ -229,8 +268,8 @@ img { max-width: 100%; }
 
 /* Sticky scroll stories */
 .scrollStory { position: relative; width: 100%; }
-.beforeAfterStory { height: 300svh; background: var(--surface); }
-.methodologyStory { height: 390svh; background: #000; }
+.beforeAfterStory { height: 340svh; background: var(--surface); }
+.methodologyStory { height: 410svh; background: #000; }
 .stickyViewport {
   position: sticky;
   top: 0;
@@ -253,7 +292,7 @@ img { max-width: 100%; }
 .sectionKicker { display: flex; align-items: center; gap: .75rem; }
 .sectionKicker > span { width: 2rem; height: 1px; background: var(--outline-soft); }
 .phaseCopyStack { position: relative; min-height: 235px; margin-top: 1.5rem; }
-.phaseCopy { position: absolute; inset: 0; will-change: transform, opacity; }
+.phaseCopy { position: absolute; inset: 0; }
 .phaseEyebrow { margin-bottom: .6rem; letter-spacing: .05em; font-size: .78rem; font-weight: 500; }
 .phaseCopy h2 {
   margin: 0 0 .85rem;
@@ -276,20 +315,25 @@ img { max-width: 100%; }
   border-top: 1px solid rgba(196,199,199,.36);
 }
 .phaseIndicatorTrack { position: relative; width: 3rem; height: 2px; overflow: hidden; background: var(--outline-soft); }
-.phaseIndicatorFill { position: absolute; inset: 0; display: block; background: #000; transform-origin: left center; will-change: transform; }
+.phaseIndicatorFill { position: absolute; inset: 0; display: block; background: #000; transform-origin: left center; }
 .storyMedia {
   position: relative;
   width: 100%;
-  height: min(56vw, 560px);
-  max-height: 65vh;
-  min-height: 400px;
+  height: min(59vw, 590px);
+  max-height: 68vh;
+  min-height: 420px;
   overflow: hidden;
   border: 1px solid rgba(196,199,199,.3);
   border-radius: var(--radius);
   background: var(--surface-container);
-  will-change: transform;
 }
-.storyImageLayer { position: absolute; inset: -12px 0; will-change: transform, opacity; }
+.storyImageLayer {
+  position: absolute;
+  inset: -5% 0;
+}
+.storyPhoto {
+  object-position: center center;
+}
 .phaseBadgeStack { position: absolute; z-index: 5; right: 1rem; bottom: 1rem; min-width: 13rem; height: 2rem; pointer-events: none; }
 .phaseBadge {
   position: absolute;
@@ -306,8 +350,12 @@ img { max-width: 100%; }
 }
 
 .darkStory { background: #000; color: #fff; display: grid; place-items: center; }
-.methodBackground { position: absolute; inset: -3% 0; will-change: transform, opacity; }
-.methodShade { position: absolute; inset: 0; background: #000; will-change: opacity; }
+.methodBackground {
+  position: absolute;
+  inset: -6% 0;
+}
+.methodPhoto { object-position: 50% 48%; }
+.methodShade { position: absolute; inset: 0; background: #000; }
 .methodContent {
   position: relative;
   z-index: 3;
@@ -323,7 +371,6 @@ img { max-width: 100%; }
   display: flex;
   flex-direction: column;
   align-items: center;
-  will-change: transform, opacity;
 }
 .methodNumber {
   display: block;
@@ -362,7 +409,7 @@ img { max-width: 100%; }
   gap: 1rem;
 }
 .verticalProgressTrack { position: relative; width: 5px; height: 2rem; overflow: hidden; border-radius: 9px; background: rgba(255,255,255,.2); }
-.verticalProgressFill { position: absolute; inset: 0; display: block; background: #fff; transform-origin: center top; will-change: transform; }
+.verticalProgressFill { position: absolute; inset: 0; display: block; background: #fff; transform-origin: center top; }
 
 /* Material gallery */
 .materialsSection { padding-block: var(--section-space); background: var(--surface); }
@@ -584,12 +631,14 @@ img { max-width: 100%; }
   .mobileMenu.isOpen { max-height: 380px; opacity: 1; }
   .brand { font-size: .78rem; }
 
+  .hero { height: 155svh; }
+  .heroMedia { inset: -5% -13%; }
   .heroContent { padding-top: calc(var(--header-height) + 2rem); }
   .hero h1 { font-size: clamp(2.25rem, 11vw, 3.2rem); }
   .heroContent > p { max-width: 520px; margin-bottom: 2rem; }
 
-  .beforeAfterStory { height: 310svh; }
-  .methodologyStory { height: 360svh; }
+  .beforeAfterStory { height: 325svh; }
+  .methodologyStory { height: 385svh; }
   .storyGrid {
     grid-template-columns: 1fr;
     grid-template-rows: auto minmax(0, 1fr);
@@ -604,7 +653,7 @@ img { max-width: 100%; }
   .phaseEyebrow { font-size: .66rem; }
   .phaseIndicators { padding-top: .8rem; }
   .phaseIndicatorTrack { width: 2.2rem; }
-  .storyMedia { height: min(48svh, 440px); min-height: 250px; max-height: none; }
+  .storyMedia { height: min(50svh, 470px); min-height: 270px; max-height: none; }
   .phaseBadgeStack { right: .7rem; bottom: .7rem; min-width: 11.5rem; }
   .phaseBadge { font-size: .56rem; }
 

@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { motion, useScroll, useSpring, useTransform } from "framer-motion";
+import { motion, useScroll, useTransform } from "framer-motion";
 import { useRef } from "react";
 import { images, methodology } from "@/lib/content";
 
@@ -12,28 +12,23 @@ export function Methodology() {
     offset: ["start start", "end end"]
   });
 
-  const progress = useSpring(scrollYProgress, {
-    stiffness: 110,
-    damping: 29,
-    mass: 0.3,
-    restDelta: 0.0005
-  });
+  // Direct, frame-by-frame mapping from the scroll position. No spring = no delayed
+  // catching-up after the user stops or reverses the trackpad/wheel.
+  const opacity0 = useTransform(scrollYProgress, [0, 0.23, 0.39], [1, 0.97, 0]);
+  const opacity1 = useTransform(scrollYProgress, [0.22, 0.39, 0.60, 0.76], [0, 1, 0.97, 0]);
+  const opacity2 = useTransform(scrollYProgress, [0.59, 0.76, 1], [0, 1, 1]);
 
-  const opacity0 = useTransform(progress, [0, 0.21, 0.39], [1, 1, 0]);
-  const opacity1 = useTransform(progress, [0.23, 0.39, 0.58, 0.75], [0, 1, 1, 0]);
-  const opacity2 = useTransform(progress, [0.59, 0.75, 1], [0, 1, 1]);
+  const y0 = useTransform(scrollYProgress, [0, 0.39], [0, -44]);
+  const y1 = useTransform(scrollYProgress, [0.22, 0.76], [44, -44]);
+  const y2 = useTransform(scrollYProgress, [0.59, 1], [44, -8]);
 
-  const y0 = useTransform(progress, [0, 0.21, 0.39], [0, 0, -38]);
-  const y1 = useTransform(progress, [0.23, 0.39, 0.58, 0.75], [38, 0, 0, -38]);
-  const y2 = useTransform(progress, [0.59, 0.75, 1], [38, 0, 0]);
+  const bgY = useTransform(scrollYProgress, [0, 1], [-26, 26]);
+  const bgOpacity = useTransform(scrollYProgress, [0, 0.5, 1], [0.34, 0.42, 0.36]);
+  const shadeOpacity = useTransform(scrollYProgress, [0, 0.5, 1], [0.54, 0.38, 0.50]);
 
-  const bgY = useTransform(progress, [0, 0.5, 1], [-20, 0, 20]);
-  const bgOpacity = useTransform(progress, [0, 0.5, 1], [0.31, 0.38, 0.31]);
-  const shadeOpacity = useTransform(progress, [0, 0.5, 1], [0.48, 0.36, 0.48]);
-
-  const fill0 = useTransform(progress, [0, 0.33], [0, 1]);
-  const fill1 = useTransform(progress, [0.33, 0.66], [0, 1]);
-  const fill2 = useTransform(progress, [0.66, 1], [0, 1]);
+  const fill0 = useTransform(scrollYProgress, [0, 0.34], [0, 1]);
+  const fill1 = useTransform(scrollYProgress, [0.33, 0.67], [0, 1]);
+  const fill2 = useTransform(scrollYProgress, [0.66, 1], [0, 1]);
 
   const opacities = [opacity0, opacity1, opacity2];
   const yValues = [y0, y1, y2];
@@ -48,8 +43,10 @@ export function Methodology() {
             alt={images.craft.alt}
             fill
             sizes="100vw"
-            className="coverImage"
-            quality={100}
+            className="coverImage methodPhoto"
+            unoptimized
+            loading="eager"
+            decoding="sync"
           />
         </motion.div>
         <motion.div className="methodShade" style={{ opacity: shadeOpacity }} />
