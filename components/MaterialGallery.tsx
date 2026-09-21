@@ -23,6 +23,7 @@ export function MaterialGallery({ compact = false }: { compact?: boolean }) {
                 fill
                 sizes="(max-width: 767px) 92vw, (max-width: 1199px) 46vw, 55vw"
                 className="coverImage materialImage"
+                quality={100}
               />
               <figcaption>{item.label}</figcaption>
             </figure>

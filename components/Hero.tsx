@@ -2,27 +2,29 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { motion, useScroll, useTransform } from "framer-motion";
+import { motion, useScroll, useSpring, useTransform } from "framer-motion";
 import { useRef } from "react";
 import { images } from "@/lib/content";
 
 export function Hero() {
   const ref = useRef<HTMLElement>(null);
   const { scrollYProgress } = useScroll({ target: ref, offset: ["start start", "end start"] });
-  const y = useTransform(scrollYProgress, [0, 1], [0, 150]);
-  const scale = useTransform(scrollYProgress, [0, 1], [1.05, 1.12]);
-  const textY = useTransform(scrollYProgress, [0, 1], [0, -44]);
-  const textOpacity = useTransform(scrollYProgress, [0, 0.72], [1, 0]);
+  const progress = useSpring(scrollYProgress, { stiffness: 120, damping: 30, mass: 0.3 });
+  const y = useTransform(progress, [0, 1], [-8, 52]);
+  const textY = useTransform(progress, [0, 1], [0, -38]);
+  const textOpacity = useTransform(progress, [0, 0.78], [1, 0]);
 
   return (
     <section ref={ref} className="hero" aria-labelledby="hero-title">
-      <motion.div className="heroMedia" style={{ y, scale }}>
+      <motion.div className="heroMedia" style={{ y }}>
         <Image
           src={images.hero.src}
           alt={images.hero.alt}
           fill
           priority
+          fetchPriority="high"
           sizes="100vw"
+          quality={100}
           className="coverImage"
         />
       </motion.div>
