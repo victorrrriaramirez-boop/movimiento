@@ -62,3 +62,7 @@ Los archivos utilizados por la interfaz están en:
 ```
 
 No hay `remotePatterns` de Google ni imágenes dependientes de Google Stitch.
+
+## V5: movimiento visual ligado al scroll
+
+La portada, la secuencia de intervención, la metodología, la galería y las cabeceras interiores incorporan ahora zoom, paneo y parallax continuos ligados directamente al scroll. La portada cambia además entre tres fotografías mediante crossfade. Consulta `SCROLL_ZOOM_V5.md` para el detalle.

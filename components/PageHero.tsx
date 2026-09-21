@@ -1,4 +1,8 @@
+"use client";
+
 import Image from "next/image";
+import { motion, useReducedMotion, useScroll, useTransform } from "framer-motion";
+import { useRef } from "react";
 import { images } from "@/lib/content";
 
 const imageMap = {
@@ -20,26 +24,54 @@ export function PageHero({
   image?: keyof typeof imageMap;
 }) {
   const selected = imageMap[image];
+  const ref = useRef<HTMLElement>(null);
+  const reduceMotion = useReducedMotion();
+  const { scrollYProgress } = useScroll({
+    target: ref,
+    offset: ["start start", "end start"]
+  });
+
+  const imageY = useTransform(scrollYProgress, [0, 1], ["0%", "12%"]);
+  const imageX = useTransform(scrollYProgress, [0, 1], ["-1%", "1%"]);
+  const imageScale = useTransform(scrollYProgress, [0, 1], [1.10, 1.02]);
+  const copyY = useTransform(scrollYProgress, [0, 1], [0, -34]);
+  const copyOpacity = useTransform(scrollYProgress, [0, 0.72, 1], [1, 0.92, 0]);
+
   return (
-    <section className="pageHero">
+    <section ref={ref} className="pageHero">
       <div className="pageHeroMedia">
-        <Image
-          src={selected.src}
-          alt={selected.alt}
-          fill
-          quality={90}
-          sizes="100vw"
-          placeholder="blur"
-          blurDataURL={selected.blurDataURL}
-          className="coverImage pageHeroPhoto"
-        />
+        <motion.div
+          className="pageHeroMotionLayer"
+          style={{
+            y: reduceMotion ? 0 : imageY,
+            x: reduceMotion ? 0 : imageX,
+            scale: reduceMotion ? 1 : imageScale
+          }}
+        >
+          <Image
+            src={selected.src}
+            alt={selected.alt}
+            fill
+            quality={90}
+            sizes="100vw"
+            placeholder="blur"
+            blurDataURL={selected.blurDataURL}
+            className="coverImage pageHeroPhoto"
+          />
+        </motion.div>
       </div>
       <div className="pageHeroShade" />
-      <div className="pageHeroContent container">
+      <motion.div
+        className="pageHeroContent container"
+        style={{
+          y: reduceMotion ? 0 : copyY,
+          opacity: reduceMotion ? 1 : copyOpacity
+        }}
+      >
         <span className="eyebrow lightText">{eyebrow}</span>
         <h1>{title}</h1>
         <p>{intro}</p>
-      </div>
+      </motion.div>
     </section>
   );
 }

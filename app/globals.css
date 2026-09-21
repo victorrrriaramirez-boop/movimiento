@@ -173,8 +173,15 @@ img { max-width: 100%; }
 .mobileNavLink.isActive { color: #000; }
 
 /* Hero */
-.hero {
+.heroStory {
   position: relative;
+  width: 100%;
+  height: 185vh;
+  background: #000;
+}
+.heroSticky {
+  position: sticky;
+  top: 0;
   min-height: 100svh;
   height: 100svh;
   display: grid;
@@ -183,11 +190,16 @@ img { max-width: 100%; }
   background: #000;
   isolation: isolate;
 }
-.heroMedia {
+.heroMediaStack,
+.heroMediaLayer {
   position: absolute;
-  inset: -25% 0;
-  will-change: transform;
+  inset: 0;
+}
+.heroMediaLayer {
+  inset: -7%;
+  will-change: transform, opacity;
   transform: translateZ(0);
+  backface-visibility: hidden;
 }
 .heroImage { object-position: 50% 52%; }
 .heroOverlay {
@@ -196,6 +208,7 @@ img { max-width: 100%; }
   z-index: 1;
   background: linear-gradient(to top, rgba(0,0,0,.80), rgba(0,0,0,.22) 50%, rgba(0,0,0,.44));
   pointer-events: none;
+  will-change: opacity;
 }
 .heroContent {
   position: relative;
@@ -209,7 +222,7 @@ img { max-width: 100%; }
   will-change: transform, opacity;
   transform: translateZ(0);
 }
-.hero h1 {
+.heroStory h1 {
   margin: 1.25rem 0 1.2rem;
   max-width: 900px;
   color: #f7f7f7;
@@ -380,6 +393,14 @@ img { max-width: 100%; }
   position: absolute;
   inset: 0;
   z-index: 0;
+  overflow: hidden;
+}
+.methodologyImageMotion {
+  position: absolute;
+  inset: -7%;
+  will-change: transform;
+  transform: translateZ(0);
+  backface-visibility: hidden;
 }
 .methodPhoto { object-position: 50% 50%; }
 .methodologyShade {
@@ -477,8 +498,19 @@ img { max-width: 100%; }
 .galleryWide { grid-column: span 7; aspect-ratio: 16/10; }
 .galleryMedium { grid-column: span 5; }
 .galleryTall { grid-column: span 4; aspect-ratio: 4/5; }
-.materialImage { transition: transform .6s cubic-bezier(.2,.8,.2,1); will-change: transform; transform: translateZ(0); }
-.materialCard:hover .materialImage { transform: scale(1.025); }
+.materialMotionLayer {
+  position: absolute;
+  inset: -6%;
+  will-change: transform;
+  transform: translateZ(0);
+  backface-visibility: hidden;
+}
+.materialImage {
+  transition: transform .6s cubic-bezier(.2,.8,.2,1);
+  will-change: transform;
+  transform: translateZ(0) scale(1.001);
+}
+.materialCard:hover .materialImage { transform: translateZ(0) scale(1.035); }
 .materialCard figcaption {
   position: absolute;
   left: 1rem;
@@ -587,9 +619,16 @@ img { max-width: 100%; }
   overflow: hidden;
   background: #000;
 }
-.pageHeroMedia { position: absolute; inset: 0; opacity: .7; }
+.pageHeroMedia { position: absolute; inset: 0; opacity: .7; overflow: hidden; }
+.pageHeroMotionLayer {
+  position: absolute;
+  inset: -7%;
+  will-change: transform;
+  transform: translateZ(0);
+  backface-visibility: hidden;
+}
 .pageHeroShade { position: absolute; inset: 0; background: linear-gradient(to top, rgba(0,0,0,.84), rgba(0,0,0,.15) 68%, rgba(0,0,0,.42)); }
-.pageHeroContent { position: relative; z-index: 2; color: #fff; padding-top: calc(var(--header-height) + 7rem); padding-bottom: clamp(3rem, 7vw, 5.5rem); }
+.pageHeroContent { position: relative; z-index: 2; color: #fff; padding-top: calc(var(--header-height) + 7rem); padding-bottom: clamp(3rem, 7vw, 5.5rem); will-change: transform, opacity; }
 .pageHero h1 {
   max-width: 920px;
   margin: .85rem 0 1rem;
@@ -661,10 +700,11 @@ img { max-width: 100%; }
   .mobileMenu.isOpen { max-height: 380px; opacity: 1; }
   .brand { font-size: .78rem; }
 
-  .hero { min-height: 100svh; height: 100svh; }
-  .heroMedia { inset: -25% -24%; }
+  .heroStory { height: 165vh; }
+  .heroSticky { min-height: 100svh; height: 100svh; }
+  .heroMediaLayer { inset: -10% -16%; }
   .heroContent { padding-top: calc(var(--header-height) + 2rem); padding-bottom: 3rem; }
-  .hero h1 { font-size: clamp(2.25rem, 11vw, 3.2rem); }
+  .heroStory h1 { font-size: clamp(2.25rem, 11vw, 3.2rem); }
   .heroContent > p { max-width: 520px; margin-bottom: 2rem; }
 
   .beforeAfterStory { height: 250vh; background: var(--surface); }
@@ -763,6 +803,12 @@ img { max-width: 100%; }
   .interventionStaticCard .phaseEyebrow { margin-bottom: .6rem; }
   .interventionStaticCard h2 { color: var(--ink); }
   .interventionStaticCard p { color: var(--secondary); }
+  .heroStory { height: 100svh; }
+  .heroMediaLayer:not(:first-child) { display: none; }
+  .heroMediaLayer,
+  .methodologyImageMotion,
+  .materialMotionLayer,
+  .pageHeroMotionLayer { transform: none !important; }
   .materialImage { transform: none !important; }
 }
 

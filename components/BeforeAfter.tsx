@@ -13,14 +13,22 @@ export function BeforeAfter() {
     offset: ["start start", "end end"]
   });
 
-  // Each crossfade occupies ~15% of the 300vh timeline.
+  // Each crossfade occupies ~15% of the scroll timeline.
   const imageOpacity0 = useTransform(scrollYProgress, [0, 0.27, 0.42], [1, 1, 0]);
   const imageOpacity1 = useTransform(scrollYProgress, [0.27, 0.42, 0.58, 0.73], [0, 1, 1, 0]);
   const imageOpacity2 = useTransform(scrollYProgress, [0.58, 0.73, 1], [0, 1, 1]);
 
-  const imageScale0 = useTransform(scrollYProgress, [0, 0.42], [1.05, 1]);
-  const imageScale1 = useTransform(scrollYProgress, [0.27, 0.73], [1.05, 1]);
-  const imageScale2 = useTransform(scrollYProgress, [0.58, 1], [1.05, 1]);
+  const imageScale0 = useTransform(scrollYProgress, [0, 0.42], [1.10, 1.0]);
+  const imageScale1 = useTransform(scrollYProgress, [0.27, 0.73], [1.10, 1.0]);
+  const imageScale2 = useTransform(scrollYProgress, [0.58, 1], [1.10, 1.0]);
+
+  const imageX0 = useTransform(scrollYProgress, [0, 0.42], ["-2.5%", "1.5%"]);
+  const imageX1 = useTransform(scrollYProgress, [0.27, 0.73], ["2%", "-1.5%"]);
+  const imageX2 = useTransform(scrollYProgress, [0.58, 1], ["-1.5%", "1.5%"]);
+
+  const imageY0 = useTransform(scrollYProgress, [0, 0.42], ["2%", "-1.5%"]);
+  const imageY1 = useTransform(scrollYProgress, [0.27, 0.73], ["-2%", "1.5%"]);
+  const imageY2 = useTransform(scrollYProgress, [0.58, 1], ["2%", "-1%"]);
 
   const textOpacity0 = useTransform(scrollYProgress, [0, 0.06, 0.27, 0.42], [0, 1, 1, 0]);
   const textOpacity1 = useTransform(scrollYProgress, [0.27, 0.42, 0.58, 0.73], [0, 1, 1, 0]);
@@ -32,6 +40,8 @@ export function BeforeAfter() {
 
   const imageOpacities = [imageOpacity0, imageOpacity1, imageOpacity2];
   const imageScales = [imageScale0, imageScale1, imageScale2];
+  const imageXs = [imageX0, imageX1, imageX2];
+  const imageYs = [imageY0, imageY1, imageY2];
   const textOpacities = [textOpacity0, textOpacity1, textOpacity2];
   const textYValues = [textY0, textY1, textY2];
 
@@ -47,7 +57,9 @@ export function BeforeAfter() {
               className="interventionImageLayer"
               style={{
                 opacity: reduceMotion ? (index === 0 ? 1 : 0) : imageOpacities[index],
-                scale: reduceMotion ? 1 : imageScales[index]
+                scale: reduceMotion ? 1 : imageScales[index],
+                x: reduceMotion ? 0 : imageXs[index],
+                y: reduceMotion ? 0 : imageYs[index]
               }}
             >
               <Image

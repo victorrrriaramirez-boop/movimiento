@@ -1,10 +1,63 @@
 "use client";
 
 import Image from "next/image";
-import { motion, useReducedMotion } from "framer-motion";
+import { motion, useReducedMotion, useScroll, useTransform } from "framer-motion";
+import { useRef } from "react";
 import { materialGallery } from "@/lib/content";
 
 const easing = [0.22, 1, 0.36, 1] as const;
+
+type GalleryItem = (typeof materialGallery)[number];
+
+function MaterialCard({ item, index, reduceMotion }: { item: GalleryItem; index: number; reduceMotion: boolean | null }) {
+  const ref = useRef<HTMLElement>(null);
+  const { scrollYProgress } = useScroll({
+    target: ref,
+    offset: ["start end", "end start"]
+  });
+
+  const imageY = useTransform(scrollYProgress, [0, 1], ["-4%", "4%"]);
+  const imageX = useTransform(scrollYProgress, [0, 1], [index % 2 === 0 ? "-1.5%" : "1.5%", index % 2 === 0 ? "1.5%" : "-1.5%"]);
+  const imageScale = useTransform(scrollYProgress, [0, 0.5, 1], [1.10, 1.04, 1.08]);
+
+  const sizes = item.className === "galleryWide"
+    ? "(max-width: 767px) 100vw, (max-width: 1199px) 58vw, 760px"
+    : item.className === "galleryMedium"
+      ? "(max-width: 767px) 100vw, (max-width: 1199px) 42vw, 560px"
+      : "(max-width: 767px) 100vw, (max-width: 1199px) 33vw, 440px";
+
+  return (
+    <motion.figure
+      ref={ref}
+      className={`materialCard ${item.className}`}
+      initial={reduceMotion ? false : { opacity: 0, y: 24 }}
+      whileInView={reduceMotion ? undefined : { opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: "-80px" }}
+      transition={{ duration: 0.6, delay: reduceMotion ? 0 : index * 0.08, ease: easing }}
+    >
+      <motion.div
+        className="materialMotionLayer"
+        style={{
+          y: reduceMotion ? 0 : imageY,
+          x: reduceMotion ? 0 : imageX,
+          scale: reduceMotion ? 1 : imageScale
+        }}
+      >
+        <Image
+          src={item.image.src}
+          alt={item.image.alt}
+          fill
+          quality={90}
+          sizes={sizes}
+          placeholder="blur"
+          blurDataURL={item.image.blurDataURL}
+          className="coverImage materialImage"
+        />
+      </motion.div>
+      <figcaption>{item.label}</figcaption>
+    </motion.figure>
+  );
+}
 
 export function MaterialGallery({ compact = false }: { compact?: boolean }) {
   const reduceMotion = useReducedMotion();
@@ -23,30 +76,7 @@ export function MaterialGallery({ compact = false }: { compact?: boolean }) {
         </div>
         <div className="materialGrid">
           {materialGallery.map((item, index) => (
-            <motion.figure
-              key={item.label}
-              className={`materialCard ${item.className}`}
-              initial={reduceMotion ? false : { opacity: 0, y: 24 }}
-              whileInView={reduceMotion ? undefined : { opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-80px" }}
-              transition={{ duration: 0.6, delay: reduceMotion ? 0 : index * 0.08, ease: easing }}
-            >
-              <Image
-                src={item.image.src}
-                alt={item.image.alt}
-                fill
-                quality={90}
-                sizes={item.className === "galleryWide"
-                  ? "(max-width: 767px) 100vw, (max-width: 1199px) 58vw, 760px"
-                  : item.className === "galleryMedium"
-                    ? "(max-width: 767px) 100vw, (max-width: 1199px) 42vw, 560px"
-                    : "(max-width: 767px) 100vw, (max-width: 1199px) 33vw, 440px"}
-                placeholder="blur"
-                blurDataURL={item.image.blurDataURL}
-                className="coverImage materialImage"
-              />
-              <figcaption>{item.label}</figcaption>
-            </motion.figure>
+            <MaterialCard key={item.label} item={item} index={index} reduceMotion={reduceMotion} />
           ))}
         </div>
       </div>
