@@ -1,25 +1,23 @@
-# Scroll fluido y calidad de imagen — v3
+# Scroll e imágenes — implementación actual
 
-Esta versión corrige específicamente los dos puntos de revisión visual:
+## Hero
 
-## 1. Scroll 1:1, sin efecto "pillado"
+La imagen principal es el único recurso visual con `priority`. El desplazamiento usa `useScroll` y `useTransform`: la fotografía se mueve a una velocidad visual inferior a la página y el contenido se desvanece al abandonar el viewport. Solo se animan `transform` y `opacity`.
 
-Las secciones narrativas ya no usan `useSpring`. El progreso de `useScroll` se conecta directamente con `useTransform`, de modo que cada incremento real del scroll modifica posición, opacidad e indicadores en el mismo frame.
+## Secuencia de intervención
 
-También se han eliminado los tramos largos en los que la animación quedaba visualmente estática. Los textos y las imágenes mantienen una deriva continua mientras están visibles.
+La sección ocupa `300vh` en escritorio/tablet y `250vh` en móvil. El viewport interior usa `position: sticky; top: 0; height: 100vh`.
 
-## 2. Portada con zoom progresivo
+Las tres fases están apiladas y se controlan directamente mediante el progreso de `useScroll`. Los crossfades duran aproximadamente el 15% del recorrido entre fases. Cada fotografía pasa de `scale(1.05)` a `scale(1)` y el texto entra desde `24px` con fade.
 
-La portada ahora funciona como una escena sticky de 170svh en escritorio y 155svh en móvil. Mientras se avanza, la fotografía pasa progresivamente de escala 1.00 a 1.18, el encuadre asciende y el overlay se aclara para enseñar mejor la reforma antes de entrar en la secuencia de intervención.
+La barra inferior utiliza `scaleX` ligada directamente al progreso del scroll, sin springs ni animaciones con retardo que puedan producir sensación de bloqueo.
 
-## 3. Fotografías más nítidas
+En móvil la fotografía ocupa la parte superior del viewport sticky y el texto aparece debajo, sobre fondo claro.
 
-Las fotografías siguen renderizándose con `next/image`, pero para las imágenes remotas de Google Stitch se usa `unoptimized`. Esto evita una segunda recompresión por el optimizador de Next/Vercel y entrega directamente el archivo remoto original.
+## Reduced motion
 
-Las imágenes críticas del hero y de la primera secuencia se precargan (`priority`/`loading=eager`) para evitar tirones de decodificación al empezar una transición.
+Con `prefers-reduced-motion: reduce` se desactiva el comportamiento sticky animado y se muestra una versión editorial estática de las tres fases. Las animaciones restantes dejan de transformar el contenido.
 
-> Nota: `unoptimized` conserva al máximo la calidad disponible en los originales de Stitch. Si más adelante se reciben fotografías definitivas del estudio en alta resolución, la opción óptima para producción es guardarlas en `/public/images/` como WebP/AVIF de 2000–3000 px y volver a activar la optimización de Next sobre esos archivos locales.
+## Calidad de imagen
 
-## 4. Rendimiento
-
-Se han reducido promociones permanentes de capas (`will-change`) en fotografías que se estaban escalando/trasladando. En algunos navegadores eso puede mantener una textura rasterizada a menor resolución durante un transform y hacer que la imagen parezca blanda.
+Todos los archivos de `/public/images/` tienen 3000 px de ancho. `next/image` se encarga de generar las variantes responsive y los formatos AVIF/WebP. La calidad solicitada es 90 y cada uso declara un atributo `sizes` adaptado a su posición real en el layout.

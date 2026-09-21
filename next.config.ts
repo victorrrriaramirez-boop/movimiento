@@ -5,16 +5,9 @@ const nextConfig: NextConfig = {
   poweredByHeader: false,
   compress: true,
   images: {
-    formats: ["image/webp"],
-    qualities: [90, 95, 100],
-    minimumCacheTTL: 2678400,
-    remotePatterns: [
-      {
-        protocol: "https",
-        hostname: "lh3.googleusercontent.com",
-        pathname: "/aida-public/**"
-      }
-    ]
+    formats: ["image/avif", "image/webp"],
+    qualities: [90],
+    minimumCacheTTL: 2678400
   },
   async headers() {
     return [

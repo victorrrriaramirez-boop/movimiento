@@ -1,98 +1,69 @@
-# Subida a GitHub y despliegue en Vercel — v3
+# Subida a GitHub y despliegue en Vercel
 
-## 1. Qué debes subir
+## 1. Subir a GitHub
 
-Sube la carpeta completa del proyecto, incluyendo:
-
-- `app/`
-- `components/`
-- `lib/`
-- `public/`
-- `.env.example`
-- `.gitignore`
-- `next.config.ts`
-- `package.json`
-- `tsconfig.json`
-- `vercel.json`
-- `README.md`
-- `SCROLL_IMAGE_QUALITY.md`
-
-No subas `.env.local`, `.next/` ni `node_modules/`.
-
-## 2. GitHub
-
-Desde la raíz del proyecto:
+Crea un repositorio vacío y, desde la carpeta del proyecto, ejecuta:
 
 ```bash
 git init
 git add .
-git commit -m "Atelier Architecture production v3"
+git commit -m "Production scroll and image update"
 git branch -M main
-git remote add origin TU_URL_DEL_REPOSITORIO
+git remote add origin URL_DEL_REPOSITORIO
 git push -u origin main
 ```
 
-## 3. Vercel
+No subas `.env.local`, `.next` ni `node_modules`.
 
-1. En Vercel crea **Add New → Project**.
-2. Importa el repositorio de GitHub.
-3. Framework Preset: **Next.js**.
-4. Build Command: automático (`npm run build`).
-5. Output Directory: automático de Next.js.
-6. Node.js: 20 o superior.
+## 2. Importar en Vercel
+
+1. Abre Vercel.
+2. Selecciona **Add New → Project**.
+3. Importa el repositorio de GitHub.
+4. Vercel detectará Next.js automáticamente.
+5. Build command: `npm run build`.
+6. No configures un Output Directory manual.
 7. Pulsa **Deploy**.
 
-## 4. Variables de entorno
+## 3. Variables
 
-Añade en **Project Settings → Environment Variables** solo las que vayas a utilizar:
+En **Project Settings → Environment Variables** configura, como mínimo:
 
 ```text
-NEXT_PUBLIC_SITE_URL=https://tudominio.com
-NEXT_PUBLIC_GTM_ID=GTM-XXXXXXX
-NEXT_PUBLIC_GA_ID=G-XXXXXXXXXX
-CONTACT_WEBHOOK_URL=https://tu-endpoint-de-formulario.com
+NEXT_PUBLIC_SITE_URL=https://dominio-final.es
 ```
 
-Después de cambiar `NEXT_PUBLIC_SITE_URL`, vuelve a desplegar para que canonical, Open Graph y sitemap utilicen el dominio definitivo.
+Opcionales:
 
-## 5. Qué se ha corregido en esta versión
+```text
+NEXT_PUBLIC_GA_ID=
+NEXT_PUBLIC_GTM_ID=
+CONTACT_WEBHOOK_URL=
+```
 
-### Scroll
+## 4. Dominio
 
-- Ya no se usa `useSpring` en las escenas principales.
-- `useScroll` alimenta directamente a `useTransform`.
-- El movimiento responde al scroll en cada frame sin retardo ni efecto de “enganche”.
-- La portada es sticky y la fotografía se amplía progresivamente mientras haces scroll.
+En **Settings → Domains**, añade el dominio definitivo y después actualiza `NEXT_PUBLIC_SITE_URL` para que canonical, sitemap y Open Graph utilicen la URL final.
 
-### Imágenes
+## 5. Comprobación visual
 
-- Se mantiene `next/image`.
-- Las imágenes remotas heredadas de Stitch usan `unoptimized` para evitar una segunda recompresión por Next/Vercel.
-- Hero y secuencias críticas se cargan con prioridad/eager según su posición.
-- Se han reducido capas promovidas de forma permanente durante los transforms para evitar pérdida de nitidez aparente.
+Después del despliegue revisa en escritorio y móvil:
 
-## 6. Comprobación después del deploy
+- Hero: carga inmediata y parallax suave.
+- Secuencia de intervención: scroll continuo sin saltos y crossfades fluidos.
+- Móvil: sección sticky de 250vh con texto debajo de la fotografía.
+- Metodología: bloques 01, 02 y 03 con aparición progresiva.
+- Galería: entrada escalonada y zoom hover.
+- Cifras: contador al entrar en viewport.
+- Preferencia de movimiento reducido: contenido estático.
 
-Revisa especialmente:
+## 6. Comprobación técnica
 
-- El zoom continuo de la portada.
-- Que la animación siga el trackpad/rueda sin quedarse retrasada.
-- La transición continua entre los tres estados de la reforma.
-- La metodología sobre fondo oscuro.
-- La nitidez de las fotografías en monitor Retina/HiDPI.
-- Móvil y tablet.
-- Menú responsive.
-- Formulario.
-- `/sitemap.xml`.
-- `/robots.txt`.
-- Canonical, favicon y Open Graph.
+Antes de hacer push, ejecuta:
 
-## 7. Si quieres todavía más calidad fotográfica
+```bash
+npm install
+npm run build
+```
 
-La limitación restante depende de los archivos originales proporcionados por Google Stitch. Para una entrega final con fotografía de máxima calidad:
-
-1. Sustituye las URLs de `lib/content.ts` por archivos propios.
-2. Guarda los originales en `public/images/`.
-3. Recomendación: 2000–3000 px en el lado largo.
-4. Exporta WebP o AVIF con calidad alta.
-5. Retira `unoptimized` de esas imágenes locales para que Next genere los tamaños responsive.
+El proyecto no utiliza imágenes remotas de Google Stitch; todos los activos visuales de la interfaz están dentro de `/public/images/`.

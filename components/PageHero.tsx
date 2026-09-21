@@ -23,7 +23,16 @@ export function PageHero({
   return (
     <section className="pageHero">
       <div className="pageHeroMedia">
-        <Image src={selected.src} alt={selected.alt} fill priority fetchPriority="high" decoding="sync" sizes="100vw" unoptimized className="coverImage pageHeroPhoto" />
+        <Image
+          src={selected.src}
+          alt={selected.alt}
+          fill
+          quality={90}
+          sizes="100vw"
+          placeholder="blur"
+          blurDataURL={selected.blurDataURL}
+          className="coverImage pageHeroPhoto"
+        />
       </div>
       <div className="pageHeroShade" />
       <div className="pageHeroContent container">

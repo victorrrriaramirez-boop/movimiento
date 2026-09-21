@@ -1,60 +1,21 @@
-# Atelier Architecture — Next.js production rebuild v3
+# Atelier Architecture — Next.js / Vercel
 
-Reimplementación del diseño de Google Stitch como proyecto independiente en Next.js App Router, TypeScript y Framer Motion, preparado para GitHub y Vercel.
+Web de arquitectura y reformas preparada para producción con Next.js 15, React 19 y Framer Motion.
 
-## Cambios principales de v3
+## Cambios de esta versión
 
-### Scroll realmente continuo
-
-Las escenas narrativas ya no usan `useSpring`.
-
-- `Hero.tsx`, `BeforeAfter.tsx` y `Methodology.tsx` conectan `useScroll` directamente con `useTransform`.
-- El progreso visual sigue el scroll 1:1 y no continúa “alcanzando” al usuario después de que el trackpad o la rueda se hayan detenido.
-- Se han eliminado los tramos largos sin movimiento perceptible.
-- Textos, fotografías, badges e indicadores mantienen desplazamiento progresivo mientras están visibles.
-
-### Portada con zoom por scroll
-
-La portada ahora es una escena sticky:
-
-- Escritorio: `170svh`.
-- Móvil: `155svh`.
-- La fotografía crece progresivamente de `1.00` a `1.18` mientras se hace scroll.
-- El encuadre sube ligeramente y el overlay se aclara para enseñar mejor la reforma.
-- El texto se desplaza y desaparece de forma gradual antes de pasar a la siguiente sección.
-
-### Mayor nitidez de fotografías
-
-Las fotografías continúan usando `next/image`, pero las URLs remotas heredadas de Google Stitch se renderizan con `unoptimized`.
-
-Esto evita una segunda recompresión en Next/Vercel y muestra directamente la máxima calidad disponible en el archivo remoto original. También se han eliminado promociones permanentes de capa en los bloques fotográficos que podían mantener una textura rasterizada a menor resolución durante los transforms.
-
-Las imágenes críticas de las secuencias de scroll se solicitan de forma anticipada para reducir tirones durante los fundidos.
-
-> El HTML de Stitch solo aporta URLs remotas, no los originales fotográficos. Si se reciben fotografías propias en alta resolución, lo ideal para la versión definitiva es guardarlas en `/public/images/` como WebP/AVIF de 2000–3000 px y dejar que Next.js las optimice desde local.
-
-## Qué incluye
-
-- Home y rutas limpias: `/servicios`, `/proyectos`, `/sobre-nosotros`, `/contacto`.
-- Animaciones sticky de portada, “Secuencia de intervención” y “Metodología”.
-- `next/image` en todas las fotografías.
-- Metadatos únicos, canonical, Open Graph y Twitter Cards por página.
-- `sitemap.xml` y `robots.txt` generados por Next.js.
-- Schema.org `ProfessionalService`.
-- HTML semántico, navegación móvil, skip link, ALT y soporte `prefers-reduced-motion`.
-- Favicon, Apple Touch Icon y Open Graph image locales.
-- Google Tag Manager / GA4 preparados por variables de entorno.
-- Formulario con validación, honeypot y endpoint `/api/contact`, preparado para webhook.
-- Sin dependencia de Google Stitch en ejecución.
-
-## Variables de entorno
-
-Copia `.env.example` a `.env.local` y completa lo necesario:
-
-- `NEXT_PUBLIC_SITE_URL`: dominio final usado en canonical, sitemap y Open Graph.
-- `NEXT_PUBLIC_GTM_ID`: ID de Google Tag Manager.
-- `NEXT_PUBLIC_GA_ID`: ID de Google Analytics 4 si no se usa GTM.
-- `CONTACT_WEBHOOK_URL`: URL HTTPS que recibirá el formulario como JSON.
+- Imágenes servidas desde `/public/images/`, sin dependencias de Google Stitch ni `lh3.googleusercontent.com`.
+- Todos los activos visuales tienen 3000 px de ancho y se renderizan con `next/image`.
+- `quality={90}` en todas las imágenes.
+- AVIF y WebP habilitados en `next.config.ts`.
+- `priority` reservado exclusivamente para la imagen LCP del hero.
+- `placeholder="blur"` y `blurDataURL` local para el resto de imágenes.
+- Hero con parallax ligado al scroll y fade progresivo del contenido.
+- "Secuencia de intervención" reconstruida como experiencia sticky de 300vh (250vh en móvil), con crossfade continuo, zoom sutil y barra de progreso ligada al scroll.
+- Metodología con entradas `whileInView` escalonadas.
+- Galería con fade-in escalonado y zoom hover de 0.6s.
+- Cifras con contador ascendente al entrar en viewport.
+- Compatibilidad con `prefers-reduced-motion`, mostrando una alternativa estática para la secuencia sticky.
 
 ## Desarrollo
 
@@ -67,33 +28,37 @@ npm run dev
 
 ```bash
 npm run build
-npm start
+npm run start
 ```
 
-## Subir a GitHub
+## Despliegue en Vercel
 
-```bash
-git init
-git add .
-git commit -m "Atelier Architecture production v3"
-git branch -M main
-git remote add origin TU_URL_DEL_REPOSITORIO
-git push -u origin main
-```
-
-## Desplegar en Vercel
-
-1. Sube el proyecto a GitHub.
-2. En Vercel pulsa **Add New → Project**.
+1. Sube el contenido del proyecto a un repositorio de GitHub.
+2. En Vercel, pulsa **Add New → Project**.
 3. Importa el repositorio.
 4. Framework Preset: **Next.js**.
-5. Build Command: deja el valor automático (`npm run build`).
-6. Añade las variables de entorno necesarias.
-7. Pulsa **Deploy**.
-8. Cuando tengas el dominio definitivo, configura `NEXT_PUBLIC_SITE_URL=https://tudominio.com` y vuelve a desplegar.
+5. Build Command: `npm run build`.
+6. Output Directory: dejar por defecto.
+7. Configura `NEXT_PUBLIC_SITE_URL` con el dominio definitivo.
+8. Añade GA/GTM solo si se van a utilizar.
 
-## Antes de publicar
+## Variables de entorno
 
-Las páginas `/privacidad` y `/aviso-legal` siguen siendo marcadores no indexables porque el material fuente no aporta los datos fiscales/titularidad necesarios para redactar textos legales reales. Sustitúyelos antes del lanzamiento definitivo.
+Consulta `.env.example`.
 
-Consulta también `SCROLL_IMAGE_QUALITY.md` y `DEPLOY_GITHUB_VERCEL.md`.
+Variables previstas:
+
+- `NEXT_PUBLIC_SITE_URL`
+- `NEXT_PUBLIC_GA_ID`
+- `NEXT_PUBLIC_GTM_ID`
+- `CONTACT_WEBHOOK_URL`
+
+## Imágenes
+
+Los archivos utilizados por la interfaz están en:
+
+```text
+/public/images/
+```
+
+No hay `remotePatterns` de Google ni imágenes dependientes de Google Stitch.

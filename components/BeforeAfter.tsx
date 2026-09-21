@@ -1,112 +1,138 @@
 "use client";
 
 import Image from "next/image";
-import { motion, useScroll, useTransform } from "framer-motion";
+import { motion, useReducedMotion, useScroll, useTransform } from "framer-motion";
 import { useRef } from "react";
 import { interventionPhases } from "@/lib/content";
 
 export function BeforeAfter() {
   const ref = useRef<HTMLElement>(null);
+  const reduceMotion = useReducedMotion();
   const { scrollYProgress } = useScroll({
     target: ref,
     offset: ["start start", "end end"]
   });
 
-  // Use the native scroll progress directly. The previous spring could trail behind
-  // fast wheel/trackpad input and make the story feel like it was getting stuck.
-  const opacity0 = useTransform(scrollYProgress, [0, 0.24, 0.39], [1, 0.96, 0]);
-  const opacity1 = useTransform(scrollYProgress, [0.22, 0.38, 0.60, 0.76], [0, 1, 0.96, 0]);
-  const opacity2 = useTransform(scrollYProgress, [0.59, 0.75, 1], [0, 1, 1]);
+  // Each crossfade occupies ~15% of the 300vh timeline.
+  const imageOpacity0 = useTransform(scrollYProgress, [0, 0.27, 0.42], [1, 1, 0]);
+  const imageOpacity1 = useTransform(scrollYProgress, [0.27, 0.42, 0.58, 0.73], [0, 1, 1, 0]);
+  const imageOpacity2 = useTransform(scrollYProgress, [0.58, 0.73, 1], [0, 1, 1]);
 
-  // Text and imagery keep moving throughout their visible range, so every wheel /
-  // trackpad increment produces a visual response instead of waiting at plateaus.
-  const y0 = useTransform(scrollYProgress, [0, 0.39], [0, -38]);
-  const y1 = useTransform(scrollYProgress, [0.22, 0.76], [38, -38]);
-  const y2 = useTransform(scrollYProgress, [0.59, 1], [38, -8]);
+  const imageScale0 = useTransform(scrollYProgress, [0, 0.42], [1.05, 1]);
+  const imageScale1 = useTransform(scrollYProgress, [0.27, 0.73], [1.05, 1]);
+  const imageScale2 = useTransform(scrollYProgress, [0.58, 1], [1.05, 1]);
 
-  const imageY0 = useTransform(scrollYProgress, [0, 0.39], [18, -24]);
-  const imageY1 = useTransform(scrollYProgress, [0.22, 0.76], [24, -24]);
-  const imageY2 = useTransform(scrollYProgress, [0.59, 1], [24, -12]);
+  const textOpacity0 = useTransform(scrollYProgress, [0, 0.06, 0.27, 0.42], [0, 1, 1, 0]);
+  const textOpacity1 = useTransform(scrollYProgress, [0.27, 0.42, 0.58, 0.73], [0, 1, 1, 0]);
+  const textOpacity2 = useTransform(scrollYProgress, [0.58, 0.73, 1], [0, 1, 1]);
 
-  const badgeY0 = useTransform(scrollYProgress, [0, 0.39], [0, -10]);
-  const badgeY1 = useTransform(scrollYProgress, [0.22, 0.76], [10, -10]);
-  const badgeY2 = useTransform(scrollYProgress, [0.59, 1], [10, 0]);
+  const textY0 = useTransform(scrollYProgress, [0, 0.06, 0.27, 0.42], [24, 0, 0, -24]);
+  const textY1 = useTransform(scrollYProgress, [0.27, 0.42, 0.58, 0.73], [24, 0, 0, -24]);
+  const textY2 = useTransform(scrollYProgress, [0.58, 0.73, 1], [24, 0, 0]);
 
-  const fill0 = useTransform(scrollYProgress, [0, 0.34], [0, 1]);
-  const fill1 = useTransform(scrollYProgress, [0.33, 0.67], [0, 1]);
-  const fill2 = useTransform(scrollYProgress, [0.66, 1], [0, 1]);
-
-  const mediaPan = useTransform(scrollYProgress, [0, 1], [7, -7]);
-
-  const opacities = [opacity0, opacity1, opacity2];
-  const yValues = [y0, y1, y2];
-  const imageYValues = [imageY0, imageY1, imageY2];
-  const badgeYValues = [badgeY0, badgeY1, badgeY2];
-  const fills = [fill0, fill1, fill2];
+  const imageOpacities = [imageOpacity0, imageOpacity1, imageOpacity2];
+  const imageScales = [imageScale0, imageScale1, imageScale2];
+  const textOpacities = [textOpacity0, textOpacity1, textOpacity2];
+  const textYValues = [textY0, textY1, textY2];
 
   return (
-    <section ref={ref} className="scrollStory beforeAfterStory" id="antes-despues" aria-labelledby="intervention-title">
+    <section ref={ref} className="beforeAfterStory" id="antes-despues" aria-labelledby="intervention-title">
       <h2 className="srOnly" id="intervention-title">Secuencia de intervención</h2>
-      <div className="stickyViewport">
-        <div className="storyGrid">
-          <div className="storyCopy">
-            <div className="sectionKicker"><span />Secuencia de Intervención</div>
-            <div className="phaseCopyStack">
+
+      <div className="interventionSticky">
+        <div className="interventionMedia" aria-hidden="true">
+          {interventionPhases.map((phase, index) => (
+            <motion.div
+              key={phase.title}
+              className="interventionImageLayer"
+              style={{
+                opacity: reduceMotion ? (index === 0 ? 1 : 0) : imageOpacities[index],
+                scale: reduceMotion ? 1 : imageScales[index]
+              }}
+            >
+              <Image
+                src={phase.image.src}
+                alt={phase.image.alt}
+                fill
+                quality={90}
+                sizes="100vw"
+                placeholder="blur"
+                blurDataURL={phase.image.blurDataURL}
+                className="coverImage interventionPhoto"
+              />
+            </motion.div>
+          ))}
+          <div className="interventionShade" />
+        </div>
+
+        <div className="interventionCopyShell container">
+          <div className="interventionCopy">
+            <div className="sectionKicker lightKicker"><span />Secuencia de Intervención</div>
+            <div className="interventionTextStack">
               {interventionPhases.map((phase, index) => (
-                <motion.div
+                <motion.article
                   key={phase.title}
-                  className="phaseCopy"
-                  style={{ opacity: opacities[index], y: yValues[index] }}
+                  className="interventionText"
+                  style={{
+                    opacity: reduceMotion ? (index === 0 ? 1 : 0) : textOpacities[index],
+                    y: reduceMotion ? 0 : textYValues[index]
+                  }}
                 >
                   <span className="phaseEyebrow">{phase.eyebrow}</span>
                   <h2>{phase.title}</h2>
                   <p>{phase.body}</p>
-                </motion.div>
+                </motion.article>
               ))}
             </div>
 
-            <div className="phaseIndicators" aria-hidden="true">
-              {interventionPhases.map((phase, index) => (
-                <span key={phase.title} className="phaseIndicatorTrack">
-                  <motion.i className="phaseIndicatorFill" style={{ scaleX: fills[index] }} />
-                </span>
-              ))}
+            <div className="interventionStatus" aria-hidden="true">
+              <div className="interventionBadgeStack">
+                {interventionPhases.map((phase, index) => (
+                  <motion.span
+                    key={phase.badge}
+                    className="interventionBadge"
+                    style={{
+                      opacity: reduceMotion ? (index === 0 ? 1 : 0) : textOpacities[index]
+                    }}
+                  >
+                    {phase.badge}
+                  </motion.span>
+                ))}
+              </div>
+              <span className="interventionProgressTrack">
+                <motion.i
+                  className="interventionProgressFill"
+                  style={{ scaleX: reduceMotion ? 1 : scrollYProgress }}
+                />
+              </span>
             </div>
           </div>
-
-          <motion.div className="storyMedia" style={{ y: mediaPan }}>
-            {interventionPhases.map((phase, index) => (
-              <motion.div
-                key={phase.title}
-                className="storyImageLayer"
-                style={{ opacity: opacities[index], y: imageYValues[index] }}
-              >
-                <Image
-                  src={phase.image.src}
-                  alt={phase.image.alt}
-                  fill
-                  sizes="(max-width: 767px) 100vw, (max-width: 1440px) 64vw, 920px"
-                  className="coverImage storyPhoto"
-                  unoptimized
-                  loading="eager"
-                  decoding="sync"
-                />
-              </motion.div>
-            ))}
-
-            <div className="phaseBadgeStack" aria-hidden="true">
-              {interventionPhases.map((phase, index) => (
-                <motion.span
-                  key={phase.badge}
-                  className="phaseBadge"
-                  style={{ opacity: opacities[index], y: badgeYValues[index] }}
-                >
-                  {phase.badge}
-                </motion.span>
-              ))}
-            </div>
-          </motion.div>
         </div>
+      </div>
+
+      <div className="interventionStaticList container" aria-label="Secuencia de intervención sin animaciones">
+        <div className="sectionKicker"><span />Secuencia de Intervención</div>
+        {interventionPhases.map((phase) => (
+          <article key={phase.title} className="interventionStaticCard">
+            <div className="interventionStaticImage">
+              <Image
+                src={phase.image.src}
+                alt={phase.image.alt}
+                fill
+                quality={90}
+                sizes="(max-width: 767px) 100vw, 50vw"
+                placeholder="blur"
+                blurDataURL={phase.image.blurDataURL}
+                className="coverImage"
+              />
+            </div>
+            <div>
+              <span className="phaseEyebrow">{phase.eyebrow}</span>
+              <h2>{phase.title}</h2>
+              <p>{phase.body}</p>
+            </div>
+          </article>
+        ))}
       </div>
     </section>
   );

@@ -8,48 +8,64 @@ export const site = {
   defaultUrl: "https://www.atelier-madrid.es"
 } as const;
 
+export type SiteImage = {
+  src: string;
+  alt: string;
+  blurDataURL: string;
+};
+
 export const images = {
   hero: {
-    src: "https://lh3.googleusercontent.com/aida-public/AB6AXuDNCKRpFSJQLn8vxdHjDn8Btdy9-pYVPvKAoRUdy0g2RtzW8mgCjoc9Uj3YHjG4Gw9UCt-y6vne78lqIf2E0R14P1MPNWxpgVOKxkO6J8tFlc9w_vmEu0rPKudOF7sRkctw07EhU3NZXIfKLIJpO9QxXJs46CdprsjavwxZxeI6pWD78uAQXDQAcv9S5_eLxKxwjn2HOwqGkvEU2fs59HpA0cioH4GX-HR_6mGvLYbnjwxrY10NInY4JQ",
-    alt: "Salón contemporáneo de arquitectura interior con grandes ventanales, madera natural y luz cálida."
+    src: "/images/hero-living-room.jpg",
+    alt: "Salón contemporáneo de arquitectura interior con grandes ventanales, madera natural y luz cálida.",
+    blurDataURL: "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDABcQERQRDhcUEhQaGBcbIjklIh8fIkYyNSk5UkhXVVFIUE5bZoNvW2F8Yk5QcptzfIeLkpSSWG2grJ+OqoOPko3/2wBDARgaGiIeIkMlJUONXlBejY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY3/wAARCAAQABgDASIAAhEBAxEB/8QAGAAAAwEBAAAAAAAAAAAAAAAAAAMEAQL/xAAfEAACAgIBBQAAAAAAAAAAAAABAgADERIEITFBUXH/xAAVAQEBAAAAAAAAAAAAAAAAAAACA//EABYRAQEBAAAAAAAAAAAAAAAAAAARAf/aAAwDAQACEQMRAD8AqKBFyWHycX4WvYESfk3rVbqQWmou5z49SenlKAd1J7QjnYoSqDoYQQ6//9k="
   },
   before: {
-    src: "https://lh3.googleusercontent.com/aida-public/AB6AXuBjoEecpmBpptM00eqr-t1O_4UKHUFHAKwwyGweQEJK-n79WhwLhGjm88EbDe-qCd-MhThlGrYLA4ZI75HdMwP-9v8ssgCXWFwou7UTKf3kTdcQ5tOCzpB-ldokGXSJJ4jebF4aEDm6g3JycZ5KMK6-ddz9XgrXlkvV8Hqy_LdPFd83ubJV5nFB7b7bfYS_E2uEvUXRYhiCwwXD4JuzagpPbjdLdu7XH67fwxa9vbWvHnXGuK-pGUL31g",
-    alt: "Estado previo de una vivienda compartimentada antes de una reforma integral."
+    src: "/images/renovation-before-apartment.jpg",
+    alt: "Estado previo de una vivienda compartimentada antes de una reforma integral.",
+    blurDataURL: "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDABcQERQRDhcUEhQaGBcbIjklIh8fIkYyNSk5UkhXVVFIUE5bZoNvW2F8Yk5QcptzfIeLkpSSWG2grJ+OqoOPko3/2wBDARgaGiIeIkMlJUONXlBejY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY3/wAARCAAOABgDASIAAhEBAxEB/8QAFwAAAwEAAAAAAAAAAAAAAAAAAAMEAf/EACAQAAICAQMFAAAAAAAAAAAAAAECAAQDBTFBERITFGH/xAAVAQEBAAAAAAAAAAAAAAAAAAAAAv/EABYRAQEBAAAAAAAAAAAAAAAAAAABEf/aAAwDAQACEQMRAD8Abp6r6a9rcSYqCSPs2q3joow3Ikj2COOZFi1WaqDhDFt4ReW0TUA6QjB//9k="
   },
   during: {
-    src: "https://lh3.googleusercontent.com/aida-public/AB6AXuBYaLWb13gPO6sSwl6aj_zVpaLVdk0u_ie5Q6l1vd4ZbMuAtjVP1dU2u9cbmmBBsVsbK7w2PWmUXQJH92qOU_XPu7sEewH_Vjj-y6a4rGBjcWdH62PpsgrfkmYEGmfA-VRiVRoiRxvySq1jwpXZj1sonT9lIOsvsSR_7eJRKocbEHEDZ0mmofuoktqOx3eoSiuswtyXMY3kJL4MRUtsvQMJbahwq-D9u6tTOL5W3Gl7aP_3jKvK6ZmY1w",
-    alt: "Fase de obra con refuerzo estructural y apertura del espacio interior."
+    src: "/images/renovation-structure-phase.jpg",
+    alt: "Fase de obra con refuerzo estructural y apertura del espacio interior.",
+    blurDataURL: "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDABcQERQRDhcUEhQaGBcbIjklIh8fIkYyNSk5UkhXVVFIUE5bZoNvW2F8Yk5QcptzfIeLkpSSWG2grJ+OqoOPko3/2wBDARgaGiIeIkMlJUONXlBejY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY3/wAARCAAQABgDASIAAhEBAxEB/8QAGAAAAgMAAAAAAAAAAAAAAAAAAAIDBAX/xAAcEAACAgMBAQAAAAAAAAAAAAABAgADBCExERL/xAAVAQEBAAAAAAAAAAAAAAAAAAAAAv/EABURAQEAAAAAAAAAAAAAAAAAAAAR/9oADAMBAAIRAxEAPwCYUq2U4YRrUdD4vIB/jIZiNGPZaj7kxVZmU9oIHvYSzatdhG+QiD//2Q=="
   },
   after: {
-    src: "https://lh3.googleusercontent.com/aida-public/AB6AXuC5eterLCVXTO5hKCjHDb8UKSmhDz83wErwDzFfMXnEc_aqKBqZPuEqb31C6lKXD58gI-nKBc3ZXXgBYuYDdfSL5yHSxy1MGND1slr2YUjRfIRUsR0QTnXIGkA4DEoWCKXEj7WE0-03AaQziwcOr70WE9Til_aOxTZ8PyX0XGfwhW1sp-mibZUlS0vRAfSWX2thCzTgE4PrZjGUW-msGLZLMXhSeXJcKBFzPauMVp3GlbJxHSepIuWvMQ",
-    alt: "Resultado final de una reforma de salón y cocina abierta con piedra natural y roble."
+    src: "/images/renovation-finished-living-kitchen.jpg",
+    alt: "Resultado final de una reforma de salón y cocina abierta con piedra natural y roble.",
+    blurDataURL: "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDABcQERQRDhcUEhQaGBcbIjklIh8fIkYyNSk5UkhXVVFIUE5bZoNvW2F8Yk5QcptzfIeLkpSSWG2grJ+OqoOPko3/2wBDARgaGiIeIkMlJUONXlBejY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY3/wAARCAAQABgDASIAAhEBAxEB/8QAFwAAAwEAAAAAAAAAAAAAAAAAAAEEA//EAB4QAAICAgMBAQAAAAAAAAAAAAECAAMEESEiMRJh/8QAFgEBAQEAAAAAAAAAAAAAAAAAAgED/8QAFhEBAQEAAAAAAAAAAAAAAAAAAAER/9oADAMBAAIRAxEAPwCxbUB2o1+TPKvCqfn2Jq3DE+RGrpyeZnTiEZFtraPWEqtxxZXpWCmEmE//2Q=="
   },
   craft: {
-    src: "https://lh3.googleusercontent.com/aida-public/AB6AXuDQHsn3pDJEYTfcdEV4jDzYih2e8FYaqE12aozfKSH_r5Bo5u72yKsIbUADg0E8O0vuraQ26pl2mNFkvOpk0viZiI-PKKar2aCFbxaf-4F-cDjhNk9jm-JeBDGu94cxF6Ku6zTuPaXA9XZ4-YBBfpsNO4jaLCR92iA7is72XIycbul-pGCSx5GCkT3QWDFI3ylCp4LNtNhf6ZTrhdM2otXbkcyF_iygZvBGUCM8CYNeOcCumwFCgVhpkQ",
-    alt: "Trabajo artesanal de carpintería a medida durante una reforma de alta gama."
+    src: "/images/carpentry-installation-oak-panels.jpg",
+    alt: "Trabajo artesanal de carpintería a medida durante una reforma de alta gama.",
+    blurDataURL: "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDABcQERQRDhcUEhQaGBcbIjklIh8fIkYyNSk5UkhXVVFIUE5bZoNvW2F8Yk5QcptzfIeLkpSSWG2grJ+OqoOPko3/2wBDARgaGiIeIkMlJUONXlBejY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY3/wAARCAAQABgDASIAAhEBAxEB/8QAFwAAAwEAAAAAAAAAAAAAAAAAAAIDBP/EAB0QAAICAgMBAAAAAAAAAAAAAAECAAMEERIhMRP/xAAUAQEAAAAAAAAAAAAAAAAAAAAC/8QAFhEBAQEAAAAAAAAAAAAAAAAAABEB/9oADAMBAAIRAxEAPwCV/wAqgQG2ZldwLE34ZS0497A70R7Fsxyzq9faCDYWU7FWXqErxRsc9aYQhpv/2Q=="
   },
   limestone: {
-    src: "https://lh3.googleusercontent.com/aida-public/AB6AXuC0ANYj9YKcsCfq4ojd-5nq1wch83vW_ykP6TH-dnt8sUC94_qMmwu8KbQTLCCu8Ue5WP2hI_xObAhOxeV6pzCQZv724O1WWdKkKQpyc1ZieQxXLK6ARqgB7VICqCkaiOewnY5gE3r_1rfMmDh53IkFn7NTEGLfzjjLqvwcbIIMbQdslByHSbaf_nN1mZniTXO4oRckCqerzS4bKe9pMBTuaAEVofS9ouECVma72NokJdfeCnswTXTdBw",
-    alt: "Isla de cocina monolítica de piedra caliza en un interior minimalista."
+    src: "/images/limestone-kitchen-island.jpg",
+    alt: "Isla de cocina monolítica de piedra caliza en un interior minimalista.",
+    blurDataURL: "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDABcQERQRDhcUEhQaGBcbIjklIh8fIkYyNSk5UkhXVVFIUE5bZoNvW2F8Yk5QcptzfIeLkpSSWG2grJ+OqoOPko3/2wBDARgaGiIeIkMlJUONXlBejY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY3/wAARCAAQABgDASIAAhEBAxEB/8QAGAAAAgMAAAAAAAAAAAAAAAAAAAUCAwT/xAAgEAACAgIABwAAAAAAAAAAAAABAgADERIEEyEiMTJh/8QAFgEBAQEAAAAAAAAAAAAAAAAAAwAB/8QAFhEBAQEAAAAAAAAAAAAAAAAAAAER/9oADAMBAAIRAxEAPwDdbYozp4EW3XOWODGVS81DuNfkpt4dW9cZhUkLFtYWdx6QkrKnD4xCWNf/2Q=="
   },
   travertine: {
-    src: "https://lh3.googleusercontent.com/aida-public/AB6AXuBttjt_bq4bFL8p4xOkyrGjM1ouXHhuxBXOhx5qsysMfNgo_y9GJEHf0JtICiTJpqX8k07077NJR5T3vncTGpdeGXk5JPmmdmU2g8C3K4xAJmJlC9MelpWBo6VbXjEiCZwY_vHRDMTADxV7ZNO5KraZX6STebfjxoA8P3CUVcK6VwrULfRb06s9c-EiKjmXV94wsuOgIUavANsDAlgTCqibglT9R5dnAa1o8FVo_kLMzPa3uXQ1Cm86jg",
-    alt: "Encuentro de travertino y roble con detalle de textura y junta arquitectónica."
+    src: "/images/travertine-oak-detail.jpg",
+    alt: "Encuentro de travertino y roble con detalle de textura y junta arquitectónica.",
+    blurDataURL: "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDABcQERQRDhcUEhQaGBcbIjklIh8fIkYyNSk5UkhXVVFIUE5bZoNvW2F8Yk5QcptzfIeLkpSSWG2grJ+OqoOPko3/2wBDARgaGiIeIkMlJUONXlBejY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY3/wAARCAAQABgDASIAAhEBAxEB/8QAFwAAAwEAAAAAAAAAAAAAAAAAAAMEAf/EABwQAAIDAAMBAAAAAAAAAAAAAAECAAMEERIiQf/EABUBAQEAAAAAAAAAAAAAAAAAAAID/8QAFREBAQAAAAAAAAAAAAAAAAAAABH/2gAMAwEAAhEDEQA/AKstossI+GbcOoYSFdnQkooEVftsYHkySkNc+YSJdBZeDCEn/9k="
   },
   bathroom: {
-    src: "https://lh3.googleusercontent.com/aida-public/AB6AXuCb-qcNKBeu9XclUfi6Gf8fjtRSU1UxDg9AmvsijvQ52P1huwoLrYkF7nOIeOVGq-uXq22YYek2bOalYZ-g9I2oc4VVko2oG9qN60DYrtgbX5i_zx5aL0iVXRbsFJTWxHo6xvq7g6Ybsys6MhG2MmEgsPaA2eMZC3SMH_fpHspLiI9AU7L3o4rrjVxTDOLgDU1cmavuVd-id6gewUE3xK5tqlguMLTJOdZa6LN3V1md9ci1l_hr_z7Mxw",
-    alt: "Baño continuo de microcemento en tono marfil con iluminación integrada."
+    src: "/images/microcement-bathroom.jpg",
+    alt: "Baño continuo de microcemento en tono marfil con iluminación integrada.",
+    blurDataURL: "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDABcQERQRDhcUEhQaGBcbIjklIh8fIkYyNSk5UkhXVVFIUE5bZoNvW2F8Yk5QcptzfIeLkpSSWG2grJ+OqoOPko3/2wBDARgaGiIeIkMlJUONXlBejY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY3/wAARCAAQABgDASIAAhEBAxEB/8QAGAAAAwEBAAAAAAAAAAAAAAAAAAIDAQT/xAAcEAACAwEAAwAAAAAAAAAAAAABAgADEQQSEzH/xAAVAQEBAAAAAAAAAAAAAAAAAAACAf/EABURAQEAAAAAAAAAAAAAAAAAAAAB/9oADAMBAAIRAxEAPwDo9uocEkrN5HTN5CjVHTsYphJQwU4W5WNWr9hIWdLLqmEKv//Z"
   },
   pivotDoor: {
-    src: "https://lh3.googleusercontent.com/aida-public/AB6AXuC5stjqFlVT-8QkbcCZFrQjVxs3MYbDL7TupXuxz8GZWqvXH6rK-Svb9iJlC2DNJL28McA6v0hSY_3_zmteDPUnCpF6eDu_ilRu6aRKyyRtXWAvLR9sVaE9CR37SvVyv2NTRvjsQAP6J3k0PLlbOh5-bU6kZs28_5G8ak7WtohYYUENeTdcN6YF4dXPfOLOYfWxlJm5qODEd6mvJQYFEsIR3CQCtN--AhSfU9REg5nX7vMv4KvUfR64SA",
-    alt: "Puerta pivotante enrasada de suelo a techo integrada en el plano de pared."
+    src: "/images/flush-pivot-door.jpg",
+    alt: "Puerta pivotante enrasada de suelo a techo integrada en el plano de pared.",
+    blurDataURL: "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDABcQERQRDhcUEhQaGBcbIjklIh8fIkYyNSk5UkhXVVFIUE5bZoNvW2F8Yk5QcptzfIeLkpSSWG2grJ+OqoOPko3/2wBDARgaGiIeIkMlJUONXlBejY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY3/wAARCAAQABgDASIAAhEBAxEB/8QAFwAAAwEAAAAAAAAAAAAAAAAAAAMEBf/EABwQAAICAwEBAAAAAAAAAAAAAAECAAMREiEEQf/EABYBAQEBAAAAAAAAAAAAAAAAAAECA//EABQRAQAAAAAAAAAAAAAAAAAAAAD/2gAMAwEAAhEDEQA/ANKyrK7KciR1jDtHJdoMfIlF3tJPBM1pPXa6PgDkI/0oCfnIQL//2Q=="
   },
   doubleHeight: {
-    src: "https://lh3.googleusercontent.com/aida-public/AB6AXuAQMil0rma5Kjx52LNpRb41UwW-BIzhMsFFjcsHBH72MupNUWN_mqu1q6mONDbV5SimUNOteMqB6DiHHv4QqRKpJPrqrsjmq41RhqjKFQYAJZ9NCah-MMyIJNnGXLSI2v488re3mEMKUeWSziEffLv0ZUyhiUrv1oGso0T6OSKQY1mdmaI6Rx25JDVEGjQKEjKOiUbwROi8bkdvOQ-UHZXw32LDaZ6Zba3VACGqP3xPEqIrDQFWpMfp0g",
-    alt: "Salón de doble altura con estructura ligera negra y abundante luz natural."
+    src: "/images/double-height-living-room.jpg",
+    alt: "Salón de doble altura con estructura ligera negra y abundante luz natural.",
+    blurDataURL: "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDABcQERQRDhcUEhQaGBcbIjklIh8fIkYyNSk5UkhXVVFIUE5bZoNvW2F8Yk5QcptzfIeLkpSSWG2grJ+OqoOPko3/2wBDARgaGiIeIkMlJUONXlBejY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY3/wAARCAAQABgDASIAAhEBAxEB/8QAFwAAAwEAAAAAAAAAAAAAAAAAAAMEAv/EAB4QAAICAgIDAAAAAAAAAAAAAAECAAMREgQhFDFB/8QAFQEBAQAAAAAAAAAAAAAAAAAAAgP/xAAWEQEBAQAAAAAAAAAAAAAAAAAAEQH/2gAMAwEAAhEDEQA/AE33o9oWs4Et4gVVJdsyYcasOD8jmAUjQdSShnk7vop0UH3CYYbYwvUIrox//9k="
   }
-} as const;
+} satisfies Record<string, SiteImage>;
 
 export const interventionPhases = [
   {
