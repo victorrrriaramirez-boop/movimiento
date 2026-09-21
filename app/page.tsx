@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Hero } from "@/components/Hero";
 import { BeforeAfter } from "@/components/BeforeAfter";
+import { MaterialFocus } from "@/components/MaterialFocus";
 import { Methodology } from "@/components/Methodology";
 import { MaterialGallery } from "@/components/MaterialGallery";
 import { Stats } from "@/components/Stats";
@@ -19,6 +20,7 @@ export default function HomePage() {
     <>
       <Hero />
       <BeforeAfter />
+      <MaterialFocus />
       <Methodology />
       <MaterialGallery />
       <Stats />

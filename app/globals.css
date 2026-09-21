@@ -89,10 +89,10 @@ img { max-width: 100%; }
   inset: 0 0 auto 0;
   z-index: 100;
   min-height: var(--header-height);
-  background: rgba(249,249,249,0.82);
+  background: rgba(249,249,249,0.92);
   border-bottom: 1px solid rgba(196,199,199,0.28);
-  backdrop-filter: blur(24px) saturate(180%);
-  -webkit-backdrop-filter: blur(24px) saturate(180%);
+  backdrop-filter: blur(12px) saturate(150%);
+  -webkit-backdrop-filter: blur(12px) saturate(150%);
 }
 .headerInner {
   width: min(100%, 1440px);
@@ -172,12 +172,12 @@ img { max-width: 100%; }
 }
 .mobileNavLink.isActive { color: #000; }
 
-/* Hero — scroll-led cinematic reveal */
+/* Hero — full-bleed scroll-led cinematic reveal */
 .heroStory {
   position: relative;
   width: 100%;
   height: 420vh;
-  background: #000;
+  background: var(--surface);
 }
 .heroSticky {
   position: sticky;
@@ -188,16 +188,15 @@ img { max-width: 100%; }
   display: grid;
   place-items: center;
   overflow: hidden;
-  background: #000;
+  background: var(--surface);
   isolation: isolate;
 }
 .heroVisualStage {
   position: absolute;
   inset: 0;
   overflow: hidden;
-  background: #050505;
-  transform-origin: 50% 50%;
-  will-change: transform, border-radius;
+  contain: paint;
+  background: var(--surface);
   transform: translateZ(0);
   backface-visibility: hidden;
 }
@@ -207,7 +206,7 @@ img { max-width: 100%; }
   inset: 0;
 }
 .heroMediaLayer {
-  inset: -4%;
+  inset: -3%;
   will-change: transform, opacity;
   transform: translateZ(0);
   transform-origin: 50% 50%;
@@ -330,6 +329,7 @@ img { max-width: 100%; }
   position: absolute;
   inset: 0;
 }
+.interventionMedia { contain: paint; }
 .interventionImageLayer {
   inset: -4%;
   will-change: transform, opacity;
@@ -413,6 +413,104 @@ img { max-width: 100%; }
   will-change: transform;
 }
 .interventionStaticList { display: none; }
+
+/* Material focus — construction material resolves from soft to crisp */
+.materialFocusStory {
+  position: relative;
+  width: 100%;
+  height: 300vh;
+  background: var(--surface);
+}
+.materialFocusSticky {
+  position: sticky;
+  top: 0;
+  width: 100%;
+  height: 100svh;
+  min-height: 100svh;
+  overflow: hidden;
+  display: grid;
+  place-items: center;
+  background: var(--surface);
+  isolation: isolate;
+}
+.materialFocusCanvas {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  contain: paint;
+  background: #eeeae3;
+}
+.materialFocusLayer {
+  position: absolute;
+  inset: -4%;
+  will-change: transform, opacity;
+  transform: translateZ(0);
+  backface-visibility: hidden;
+  transform-origin: 52% 48%;
+}
+.materialFocusImage {
+  object-position: 52% 50%;
+}
+.materialFocusVeil {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, rgba(249,249,249,.88) 0%, rgba(249,249,249,.56) 24%, rgba(249,249,249,.08) 52%, rgba(249,249,249,0) 75%);
+  pointer-events: none;
+}
+.materialFocusCopy {
+  position: relative;
+  z-index: 3;
+  width: 100%;
+  align-self: end;
+  padding-bottom: clamp(4rem, 8vh, 7rem);
+  will-change: transform, opacity;
+  transform: translateZ(0);
+  pointer-events: none;
+}
+.materialFocusCopy .eyebrow { margin-bottom: .9rem; color: rgba(26,28,28,.68); }
+.materialFocusCopy h2 {
+  max-width: 640px;
+  margin: 0 0 1rem;
+  font-size: clamp(2.25rem, 4.6vw, 4.35rem);
+  line-height: 1.05;
+  letter-spacing: -.04em;
+  font-weight: 300;
+  text-wrap: balance;
+}
+.materialFocusCopy p {
+  max-width: 560px;
+  margin: 0;
+  color: rgba(26,28,28,.72);
+  font-size: clamp(.9rem, 1.15vw, 1rem);
+  line-height: 1.7;
+}
+.materialFocusLabel {
+  display: inline-block;
+  margin-top: 1.35rem;
+  font-size: .62rem;
+  font-weight: 600;
+  letter-spacing: .09em;
+  text-transform: uppercase;
+  color: rgba(26,28,28,.58);
+}
+.materialFocusProgress {
+  position: absolute;
+  z-index: 4;
+  left: var(--page-pad);
+  right: var(--page-pad);
+  bottom: 1.1rem;
+  height: 1px;
+  overflow: hidden;
+  background: rgba(26,28,28,.12);
+}
+.materialFocusProgress i {
+  position: absolute;
+  inset: 0;
+  display: block;
+  background: rgba(26,28,28,.48);
+  transform-origin: left center;
+  will-change: transform;
+}
 
 /* Methodology */
 .methodologySection {
@@ -741,6 +839,15 @@ img { max-width: 100%; }
   .heroStory h1 { font-size: clamp(2.25rem, 11vw, 3.2rem); }
   .heroContent > p { max-width: 520px; margin-bottom: 2rem; }
 
+  .materialFocusStory { height: 235vh; }
+  .materialFocusLayer { inset: -6% -12%; }
+  .materialFocusVeil {
+    background: linear-gradient(to top, rgba(249,249,249,.94) 0%, rgba(249,249,249,.72) 22%, rgba(249,249,249,.12) 52%, rgba(249,249,249,0) 72%);
+  }
+  .materialFocusCopy { padding-bottom: 4.4rem; }
+  .materialFocusCopy h2 { max-width: 92%; font-size: clamp(2rem, 10vw, 3rem); }
+  .materialFocusCopy p { max-width: 94%; font-size: .82rem; line-height: 1.58; }
+
   .beforeAfterStory { height: 330vh; background: var(--surface); }
   .interventionSticky {
     display: grid;
@@ -824,6 +931,7 @@ img { max-width: 100%; }
     scroll-behavior: auto !important;
   }
   .beforeAfterStory { height: auto; padding-block: var(--section-space); background: var(--surface); }
+  .materialFocusStory { height: 100svh; }
   .interventionSticky { display: none; }
   .interventionStaticList { display: grid; gap: 3rem; }
   .interventionStaticList > .sectionKicker { margin-bottom: 1rem; }
@@ -841,6 +949,7 @@ img { max-width: 100%; }
   .heroMediaLayer:not(:first-child) { display: none; }
   .heroVisualStage,
   .heroMediaLayer,
+  .materialFocusLayer,
   .methodologyImageMotion,
   .materialMotionLayer,
   .pageHeroMotionLayer { transform: none !important; }

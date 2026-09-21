@@ -1,18 +1,18 @@
-# Validación V7
+# Validación V8
 
-Comprobaciones realizadas en el proyecto generado:
+Validaciones realizadas en el proyecto:
 
-- Sintaxis TS/TSX validada mediante el compilador TypeScript en todos los archivos de aplicación y componentes.
-- Balance de llaves CSS correcto.
-- Todas las rutas locales `/images/...` utilizadas en código existen en `/public/images/`.
-- No se utiliza ninguna etiqueta `<img>` en los componentes.
-- Las seis instancias de `next/image` incluyen `quality={90}`.
-- Solo la imagen inicial del hero utiliza `priority`.
-- `next.config.ts` no contiene `remotePatterns`.
-- AVIF y WebP permanecen habilitados.
+- 28 archivos TypeScript/TSX transpilan sin errores sintácticos con TypeScript 5.8.3.
+- CSS con llaves balanceadas.
+- No existen etiquetas `<img>` en componentes TSX.
+- No quedan referencias a `lh3.googleusercontent.com` ni `aida-public`.
+- Todas las imágenes de contenido están alojadas en `/public/images/`.
+- Los originales nítidos principales tienen 3000 px de ancho.
+- La nueva escena de material usa `next/image`, `quality={90}`, `sizes="100vw"` y transformaciones compositor-friendly.
+- La versión desenfocada del travertino se genera previamente como archivo local para evitar `filter: blur()` durante el scroll.
 
-## npm run build
+## `npm run build`
 
-Se ejecutó `npm run build` en este entorno. No puede iniciarse porque no existe `node_modules` y el binario `next` no está instalado localmente (`next: not found`). El entorno de ejecución no dispone de acceso a npm para instalar las dependencias.
+Se intentó instalar las dependencias con `npm install --no-audit --no-fund`, pero la operación agotó el tiempo de espera de red en este entorno antes de crear `node_modules`. Por tanto no es posible ejecutar aquí un build real de Next.js.
 
-El workflow `.github/workflows/build.yml` permanece incluido para ejecutar la instalación y el build automáticamente al subir el repositorio a GitHub.
+El workflow `.github/workflows/build.yml` permanece incluido y ejecuta `npm install` y `npm run build` al subir el proyecto a GitHub.

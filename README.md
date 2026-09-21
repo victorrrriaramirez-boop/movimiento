@@ -1,31 +1,30 @@
-# Atelier Architecture — Next.js / Vercel
+# Atelier Architecture — V8 — Next.js / Vercel
 
 Web de arquitectura y reformas preparada para producción con Next.js 15, React 19 y Framer Motion.
 
-## V7 — scroll cinematográfico tipo product story
+## V8 — scroll limpio, full-bleed y enfoque progresivo
 
-Esta versión reorganiza el movimiento para que la navegación se sienta más cercana a una presentación editorial de producto de alta gama:
+Esta versión elimina el encuadre que dejaba bandas oscuras alrededor del hero y simplifica el movimiento para que toda la navegación resulte más fluida y limpia:
 
-- Hero fijado durante un recorrido largo de scroll.
-- La escena inicial comienza ligeramente encuadrada y se expande suavemente hasta ocupar todo el viewport.
-- Tres fotografías del hero se suceden con crossfade largo, zoom-out muy contenido y desplazamiento vertical mínimo.
-- El titular permanece estable al inicio y desaparece progresivamente mientras la imagen gana protagonismo.
-- Barra de progreso inferior ligada 1:1 al scroll.
-- "Secuencia de intervención" ampliada a 420vh en escritorio y 330vh en móvil, con imágenes full-bleed apiladas, crossfade continuo y zoom 1.08 → 1.00.
-- Textos de cada fase sincronizados con el avance real del scroll, sin springs ni inercias artificiales.
-- Metodología, galería y cifras reaccionan directamente a la posición del scroll con movimientos cortos y limpios.
-- Todas las animaciones usan transform/opacidad y respetan `prefers-reduced-motion`.
+- Hero siempre a sangre, ocupando todo el viewport, sin marco ni bordes negros.
+- Tres fotografías de alta resolución con crossfade largo, zoom muy contenido y paneo vertical mínimo.
+- Animaciones ligadas 1:1 al scroll nativo, sin springs, Lenis, GSAP ni inercias artificiales.
+- Nueva escena sticky de material constructivo con travertino y roble: comienza suave y se resuelve progresivamente hasta quedar totalmente nítida.
+- La nitidez se consigue con dos assets locales y crossfade por opacidad, evitando `filter: blur()` en tiempo real.
+- La secuencia de intervención mantiene imágenes full-bleed, crossfade continuo y texto sincronizado.
+- `prefers-reduced-motion` muestra contenido estático y nítido.
+- Se reduce el blur del header fijo para disminuir trabajo de GPU durante el scroll.
 
 ## Imágenes
 
 - Activos locales en `/public/images/`.
-- 3000 px de ancho.
+- Originales principales a 3000 px de ancho.
 - Renderizado exclusivamente mediante `next/image`.
 - `quality={90}`.
 - AVIF y WebP habilitados en `next.config.ts`.
 - `priority` reservado exclusivamente para la imagen LCP del hero.
-- `placeholder="blur"` y `blurDataURL` local.
-- Sin `remotePatterns` de proveedores externos.
+- `placeholder="blur"` en los originales nítidos.
+- Sin `remotePatterns` ni dependencias de Google Stitch.
 
 ## Desarrollo
 
@@ -63,4 +62,4 @@ Variables previstas:
 - `NEXT_PUBLIC_GTM_ID`
 - `CONTACT_WEBHOOK_URL`
 
-Consulta `SCROLL_APPLE_V7.md` para el detalle del comportamiento de las animaciones.
+Consulta `SCROLL_FOCUS_V8.md` para el detalle técnico del nuevo movimiento y `BUILD_VALIDATION.md` para las comprobaciones realizadas.

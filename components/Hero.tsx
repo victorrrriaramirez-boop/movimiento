@@ -16,29 +16,24 @@ export function Hero() {
     offset: ["start start", "end end"]
   });
 
-  // Apple-style opening: the visual starts as a framed scene and expands into the viewport.
-  // Everything remains tied 1:1 to native scroll, with no spring or artificial inertia.
-  const stageScale = useTransform(scrollYProgress, [0, 0.16, 1], [0.91, 1, 1]);
-  const stageY = useTransform(scrollYProgress, [0, 0.16], [26, 0]);
-  const stageRadius = useTransform(scrollYProgress, [0, 0.16], [22, 0]);
+  // Full-bleed cinematic sequence: no framed stage or black gutters.
+  // Only transform + opacity are animated so the sequence stays compositor-friendly.
+  const opacity0 = useTransform(scrollYProgress, [0, 0.30, 0.46], [1, 1, 0]);
+  const opacity1 = useTransform(scrollYProgress, [0.30, 0.46, 0.62, 0.78], [0, 1, 1, 0]);
+  const opacity2 = useTransform(scrollYProgress, [0.62, 0.78, 1], [0, 1, 1]);
 
-  const opacity0 = useTransform(scrollYProgress, [0, 0.29, 0.44], [1, 1, 0]);
-  const opacity1 = useTransform(scrollYProgress, [0.29, 0.44, 0.61, 0.76], [0, 1, 1, 0]);
-  const opacity2 = useTransform(scrollYProgress, [0.61, 0.76, 1], [0, 1, 1]);
+  const scale0 = useTransform(scrollYProgress, [0, 0.46], [1.085, 1.015]);
+  const scale1 = useTransform(scrollYProgress, [0.30, 0.78], [1.075, 1.012]);
+  const scale2 = useTransform(scrollYProgress, [0.62, 1], [1.065, 1.006]);
 
-  const scale0 = useTransform(scrollYProgress, [0, 0.44], [1.075, 1.01]);
-  const scale1 = useTransform(scrollYProgress, [0.29, 0.76], [1.065, 1.008]);
-  const scale2 = useTransform(scrollYProgress, [0.61, 1], [1.055, 1]);
+  const y0 = useTransform(scrollYProgress, [0, 0.46], ["1.2%", "-0.7%"]);
+  const y1 = useTransform(scrollYProgress, [0.30, 0.78], ["0.9%", "-0.55%"]);
+  const y2 = useTransform(scrollYProgress, [0.62, 1], ["0.7%", "-0.35%"]);
 
-  const y0 = useTransform(scrollYProgress, [0, 0.44], ["1.4%", "-0.7%"]);
-  const y1 = useTransform(scrollYProgress, [0.29, 0.76], ["0.9%", "-0.55%"]);
-  const y2 = useTransform(scrollYProgress, [0.61, 1], ["0.7%", "-0.35%"]);
-
-  const contentOpacity = useTransform(scrollYProgress, [0, 0.10, 0.25], [1, 1, 0]);
-  const contentY = useTransform(scrollYProgress, [0, 0.25], [0, -36]);
-  const contentScale = useTransform(scrollYProgress, [0, 0.25], [1, 0.985]);
-  const overlayOpacity = useTransform(scrollYProgress, [0, 0.20, 0.44, 1], [1, 0.78, 0.52, 0.34]);
-  const hintOpacity = useTransform(scrollYProgress, [0, 0.08, 0.17], [1, 0.85, 0]);
+  const contentOpacity = useTransform(scrollYProgress, [0, 0.13, 0.30], [1, 1, 0]);
+  const contentY = useTransform(scrollYProgress, [0, 0.30], [0, -30]);
+  const overlayOpacity = useTransform(scrollYProgress, [0, 0.24, 0.52, 1], [1, 0.78, 0.54, 0.34]);
+  const hintOpacity = useTransform(scrollYProgress, [0, 0.08, 0.18], [1, 0.75, 0]);
   const progressScale = useTransform(scrollYProgress, [0, 1], [0, 1]);
 
   const opacities = [opacity0, opacity1, opacity2];
@@ -48,14 +43,7 @@ export function Hero() {
   return (
     <section ref={ref} className="heroStory" aria-labelledby="hero-title">
       <div className="heroSticky">
-        <motion.div
-          className="heroVisualStage"
-          style={{
-            scale: reduceMotion ? 1 : stageScale,
-            y: reduceMotion ? 0 : stageY,
-            borderRadius: reduceMotion ? 0 : stageRadius
-          }}
-        >
+        <div className="heroVisualStage">
           <div className="heroMediaStack" aria-hidden="true">
             {heroFrames.map((frame, index) => (
               <motion.div
@@ -82,13 +70,12 @@ export function Hero() {
             ))}
           </div>
           <motion.div className="heroOverlay" style={{ opacity: reduceMotion ? 1 : overlayOpacity }} />
-        </motion.div>
+        </div>
 
         <motion.div
           className="heroContent"
           style={{
             y: reduceMotion ? 0 : contentY,
-            scale: reduceMotion ? 1 : contentScale,
             opacity: reduceMotion ? 1 : contentOpacity
           }}
         >
