@@ -49,11 +49,11 @@ En **Settings → Domains**, añade el dominio definitivo y después actualiza `
 
 Después del despliegue revisa en escritorio y móvil:
 
-- Hero: carga inmediata y parallax suave.
-- Secuencia de intervención: scroll continuo sin saltos y crossfades fluidos.
-- Móvil: sección sticky de 250vh con texto debajo de la fotografía.
-- Metodología: bloques 01, 02 y 03 con aparición progresiva.
-- Galería: entrada escalonada y zoom hover.
+- Hero: expansión inicial, zoom-out y cambios de escena ligados al scroll.
+- Secuencia de intervención: sticky cinematográfico, crossfades amplios y progreso continuo.
+- Móvil: sección sticky de 330vh con texto debajo de la fotografía.
+- Metodología: bloques 01, 02 y 03 con aparición directamente ligada al scroll.
+- Galería: entrada ligada al scroll, parallax corto y zoom hover sutil.
 - Cifras: contador al entrar en viewport.
 - Preferencia de movimiento reducido: contenido estático.
 

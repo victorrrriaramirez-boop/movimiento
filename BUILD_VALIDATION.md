@@ -1,21 +1,18 @@
-# Validación V6
+# Validación V7
 
-Se han comprobado de forma estática los cambios de esta versión:
+Comprobaciones realizadas en el proyecto generado:
 
-- balance correcto de llaves en CSS y componentes TSX modificados;
-- imágenes locales servidas con `next/image`;
-- animaciones limitadas a `transform` y `opacity`;
-- recorridos responsive actualizados a 240/200vh para hero y 360/300vh para la secuencia de intervención;
-- `prefers-reduced-motion` conserva la alternativa estática;
-- no se han añadido nuevas dependencias.
+- Sintaxis TS/TSX validada mediante el compilador TypeScript en todos los archivos de aplicación y componentes.
+- Balance de llaves CSS correcto.
+- Todas las rutas locales `/images/...` utilizadas en código existen en `/public/images/`.
+- No se utiliza ninguna etiqueta `<img>` en los componentes.
+- Las seis instancias de `next/image` incluyen `quality={90}`.
+- Solo la imagen inicial del hero utiliza `priority`.
+- `next.config.ts` no contiene `remotePatterns`.
+- AVIF y WebP permanecen habilitados.
 
-También se intentó instalar las dependencias para ejecutar el build real, pero `npm install` agotó el tiempo de espera de red en este entorno. El `tsc` global no puede validar el proyecto sin `node_modules` porque no dispone de los tipos de Next.js, React y Framer Motion.
+## npm run build
 
-Con acceso normal al registro npm, la comprobación final prevista es:
+Se ejecutó `npm run build` en este entorno. No puede iniciarse porque no existe `node_modules` y el binario `next` no está instalado localmente (`next: not found`). El entorno de ejecución no dispone de acceso a npm para instalar las dependencias.
 
-```bash
-npm install
-npm run build
-```
-
-El workflow de `.github/workflows/build.yml` sigue ejecutando esa validación automáticamente en GitHub.
+El workflow `.github/workflows/build.yml` permanece incluido para ejecutar la instalación y el build automáticamente al subir el repositorio a GitHub.

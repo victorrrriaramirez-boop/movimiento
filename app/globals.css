@@ -172,23 +172,34 @@ img { max-width: 100%; }
 }
 .mobileNavLink.isActive { color: #000; }
 
-/* Hero */
+/* Hero — scroll-led cinematic reveal */
 .heroStory {
   position: relative;
   width: 100%;
-  height: 240vh;
+  height: 420vh;
   background: #000;
 }
 .heroSticky {
   position: sticky;
   top: 0;
-  min-height: 100svh;
+  width: 100%;
   height: 100svh;
+  min-height: 100svh;
   display: grid;
   place-items: center;
   overflow: hidden;
   background: #000;
   isolation: isolate;
+}
+.heroVisualStage {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  background: #050505;
+  transform-origin: 50% 50%;
+  will-change: transform, border-radius;
+  transform: translateZ(0);
+  backface-visibility: hidden;
 }
 .heroMediaStack,
 .heroMediaLayer {
@@ -196,9 +207,10 @@ img { max-width: 100%; }
   inset: 0;
 }
 .heroMediaLayer {
-  inset: -5%;
+  inset: -4%;
   will-change: transform, opacity;
   transform: translateZ(0);
+  transform-origin: 50% 50%;
   backface-visibility: hidden;
 }
 .heroImage { object-position: 50% 52%; }
@@ -206,7 +218,7 @@ img { max-width: 100%; }
   position: absolute;
   inset: 0;
   z-index: 1;
-  background: linear-gradient(to top, rgba(0,0,0,.80), rgba(0,0,0,.22) 50%, rgba(0,0,0,.44));
+  background: linear-gradient(to top, rgba(0,0,0,.82), rgba(0,0,0,.20) 52%, rgba(0,0,0,.42));
   pointer-events: none;
   will-change: opacity;
 }
@@ -221,6 +233,7 @@ img { max-width: 100%; }
   align-items: center;
   will-change: transform, opacity;
   transform: translateZ(0);
+  transform-origin: 50% 50%;
 }
 .heroStory h1 {
   margin: 1.25rem 0 1.2rem;
@@ -262,6 +275,25 @@ img { max-width: 100%; }
   height: 2.4rem;
   background: linear-gradient(to bottom, rgba(255,255,255,.85), rgba(255,255,255,.08));
 }
+.heroProgress {
+  position: absolute;
+  z-index: 5;
+  left: var(--page-pad);
+  right: var(--page-pad);
+  bottom: .35rem;
+  height: 1px;
+  overflow: hidden;
+  background: rgba(255,255,255,.16);
+  pointer-events: none;
+}
+.heroProgress i {
+  position: absolute;
+  inset: 0;
+  display: block;
+  background: rgba(255,255,255,.72);
+  transform-origin: left center;
+  will-change: transform;
+}
 .textAction {
   display: inline-flex;
   align-items: center;
@@ -279,14 +311,15 @@ img { max-width: 100%; }
 .beforeAfterStory {
   position: relative;
   width: 100%;
-  height: 360vh;
+  height: 420vh;
   background: #050505;
 }
 .interventionSticky {
   position: sticky;
   top: 0;
   width: 100%;
-  height: 100vh;
+  height: 100svh;
+  min-height: 100svh;
   overflow: hidden;
   background: #050505;
   isolation: isolate;
@@ -298,7 +331,7 @@ img { max-width: 100%; }
   inset: 0;
 }
 .interventionImageLayer {
-  inset: -3%;
+  inset: -4%;
   will-change: transform, opacity;
   transform: translateZ(0);
 }
@@ -701,17 +734,17 @@ img { max-width: 100%; }
   .mobileMenu.isOpen { max-height: 380px; opacity: 1; }
   .brand { font-size: .78rem; }
 
-  .heroStory { height: 200vh; }
+  .heroStory { height: 320vh; }
   .heroSticky { min-height: 100svh; height: 100svh; }
   .heroMediaLayer { inset: -7% -10%; }
   .heroContent { padding-top: calc(var(--header-height) + 2rem); padding-bottom: 3rem; }
   .heroStory h1 { font-size: clamp(2.25rem, 11vw, 3.2rem); }
   .heroContent > p { max-width: 520px; margin-bottom: 2rem; }
 
-  .beforeAfterStory { height: 300vh; background: var(--surface); }
+  .beforeAfterStory { height: 330vh; background: var(--surface); }
   .interventionSticky {
     display: grid;
-    grid-template-rows: 56vh 44vh;
+    grid-template-rows: 56svh 44svh;
     background: var(--surface);
   }
   .interventionMedia {
@@ -806,6 +839,7 @@ img { max-width: 100%; }
   .interventionStaticCard p { color: var(--secondary); }
   .heroStory { height: 100svh; }
   .heroMediaLayer:not(:first-child) { display: none; }
+  .heroVisualStage,
   .heroMediaLayer,
   .methodologyImageMotion,
   .materialMotionLayer,

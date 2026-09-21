@@ -2,20 +2,30 @@
 
 Web de arquitectura y reformas preparada para producción con Next.js 15, React 19 y Framer Motion.
 
-## Cambios de esta versión
+## V7 — scroll cinematográfico tipo product story
 
-- Imágenes servidas desde `/public/images/`, sin dependencias de Google Stitch ni `lh3.googleusercontent.com`.
-- Todos los activos visuales tienen 3000 px de ancho y se renderizan con `next/image`.
-- `quality={90}` en todas las imágenes.
+Esta versión reorganiza el movimiento para que la navegación se sienta más cercana a una presentación editorial de producto de alta gama:
+
+- Hero fijado durante un recorrido largo de scroll.
+- La escena inicial comienza ligeramente encuadrada y se expande suavemente hasta ocupar todo el viewport.
+- Tres fotografías del hero se suceden con crossfade largo, zoom-out muy contenido y desplazamiento vertical mínimo.
+- El titular permanece estable al inicio y desaparece progresivamente mientras la imagen gana protagonismo.
+- Barra de progreso inferior ligada 1:1 al scroll.
+- "Secuencia de intervención" ampliada a 420vh en escritorio y 330vh en móvil, con imágenes full-bleed apiladas, crossfade continuo y zoom 1.08 → 1.00.
+- Textos de cada fase sincronizados con el avance real del scroll, sin springs ni inercias artificiales.
+- Metodología, galería y cifras reaccionan directamente a la posición del scroll con movimientos cortos y limpios.
+- Todas las animaciones usan transform/opacidad y respetan `prefers-reduced-motion`.
+
+## Imágenes
+
+- Activos locales en `/public/images/`.
+- 3000 px de ancho.
+- Renderizado exclusivamente mediante `next/image`.
+- `quality={90}`.
 - AVIF y WebP habilitados en `next.config.ts`.
 - `priority` reservado exclusivamente para la imagen LCP del hero.
-- `placeholder="blur"` y `blurDataURL` local para el resto de imágenes.
-- Hero con parallax ligado al scroll y fade progresivo del contenido.
-- "Secuencia de intervención" ajustada a una experiencia sticky más lenta de 360vh (300vh en móvil), con crossfade amplio, zoom contenido y barra de progreso ligada al scroll.
-- Metodología con entradas `whileInView` escalonadas.
-- Galería con fade-in escalonado más pausado y zoom hover sutil de 0.8s.
-- Cifras con contador ascendente al entrar en viewport.
-- Compatibilidad con `prefers-reduced-motion`, mostrando una alternativa estática para la secuencia sticky.
+- `placeholder="blur"` y `blurDataURL` local.
+- Sin `remotePatterns` de proveedores externos.
 
 ## Desarrollo
 
@@ -53,16 +63,4 @@ Variables previstas:
 - `NEXT_PUBLIC_GTM_ID`
 - `CONTACT_WEBHOOK_URL`
 
-## Imágenes
-
-Los archivos utilizados por la interfaz están en:
-
-```text
-/public/images/
-```
-
-No hay `remotePatterns` de Google ni imágenes dependientes de Google Stitch.
-
-## V6: movimiento más lento y editorial
-
-La portada y la secuencia de intervención tienen ahora recorridos más largos, zoom más contenido y paneos mínimos. Se han eliminado movimientos horizontales innecesarios en metodología, galería y cabeceras interiores para mantener una composición más limpia. Consulta `SCROLL_MOTION_V6.md` para el detalle.
+Consulta `SCROLL_APPLE_V7.md` para el detalle del comportamiento de las animaciones.

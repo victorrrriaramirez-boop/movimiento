@@ -5,7 +5,35 @@ import { motion, useReducedMotion, useScroll, useTransform } from "framer-motion
 import { useRef } from "react";
 import { images, methodology } from "@/lib/content";
 
-const easing = [0.22, 1, 0.36, 1] as const;
+type MethodStep = (typeof methodology)[number];
+
+function MethodologyStep({ step }: { step: MethodStep }) {
+  const ref = useRef<HTMLElement>(null);
+  const reduceMotion = useReducedMotion();
+  const { scrollYProgress } = useScroll({
+    target: ref,
+    offset: ["start 92%", "start 52%"]
+  });
+  const opacity = useTransform(scrollYProgress, [0, 0.68, 1], [0, 0.75, 1]);
+  const y = useTransform(scrollYProgress, [0, 1], [36, 0]);
+  const scale = useTransform(scrollYProgress, [0, 1], [0.985, 1]);
+
+  return (
+    <motion.article
+      ref={ref}
+      className="methodologyStep"
+      style={{
+        opacity: reduceMotion ? 1 : opacity,
+        y: reduceMotion ? 0 : y,
+        scale: reduceMotion ? 1 : scale
+      }}
+    >
+      <span className="methodNumber">{step.number}</span>
+      <h2>{step.title}</h2>
+      <p>{step.body}</p>
+    </motion.article>
+  );
+}
 
 export function Methodology() {
   const ref = useRef<HTMLElement>(null);
@@ -15,8 +43,10 @@ export function Methodology() {
     offset: ["start end", "end start"]
   });
 
-  const backgroundY = useTransform(scrollYProgress, [0, 1], ["-2.4%", "2.4%"]);
-  const backgroundScale = useTransform(scrollYProgress, [0, 0.5, 1], [1.055, 1.02, 1.04]);
+  const backgroundY = useTransform(scrollYProgress, [0, 1], ["1.8%", "-1.8%"]);
+  const backgroundScale = useTransform(scrollYProgress, [0, 1], [1.075, 1.02]);
+  const headingY = useTransform(scrollYProgress, [0.05, 0.35], [22, 0]);
+  const headingOpacity = useTransform(scrollYProgress, [0.05, 0.24], [0.35, 1]);
 
   return (
     <section ref={ref} className="methodologySection" id="metodologia" aria-labelledby="methodology-label">
@@ -42,25 +72,18 @@ export function Methodology() {
         <div className="methodologyShade" />
       </div>
 
-      <div className="container methodologyInner">
+      <motion.div
+        className="container methodologyInner"
+        style={{
+          y: reduceMotion ? 0 : headingY,
+          opacity: reduceMotion ? 1 : headingOpacity
+        }}
+      >
         <span id="methodology-label" className="eyebrow lightText">Metodología Quirúrgica</span>
         <div className="methodologyGrid">
-          {methodology.map((step, index) => (
-            <motion.article
-              key={step.number}
-              className="methodologyStep"
-              initial={reduceMotion ? false : { opacity: 0, y: 22 }}
-              whileInView={reduceMotion ? undefined : { opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-100px" }}
-              transition={{ duration: 0.9, delay: reduceMotion ? 0 : index * 0.12, ease: easing }}
-            >
-              <span className="methodNumber">{step.number}</span>
-              <h2>{step.title}</h2>
-              <p>{step.body}</p>
-            </motion.article>
-          ))}
+          {methodology.map((step) => <MethodologyStep key={step.number} step={step} />)}
         </div>
-      </div>
+      </motion.div>
     </section>
   );
 }

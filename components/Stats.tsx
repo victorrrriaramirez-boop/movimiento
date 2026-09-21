@@ -1,6 +1,6 @@
 "use client";
 
-import { animate, useInView, useReducedMotion } from "framer-motion";
+import { animate, motion, useInView, useReducedMotion, useScroll, useTransform } from "framer-motion";
 import { useEffect, useRef, useState } from "react";
 import { stats } from "@/lib/content";
 
@@ -20,7 +20,7 @@ function CountUp({ value }: { value: string }) {
     if (!inView) return;
 
     const controls = animate(0, target, {
-      duration: 1.35,
+      duration: 1.45,
       ease: [0.22, 1, 0.36, 1],
       onUpdate: (latest) => setDisplay(Math.round(latest))
     });
@@ -30,17 +30,34 @@ function CountUp({ value }: { value: string }) {
   return <strong ref={ref}>{prefix}{display}</strong>;
 }
 
+function StatItem({ item }: { item: (typeof stats)[number] }) {
+  const ref = useRef<HTMLElement>(null);
+  const reduceMotion = useReducedMotion();
+  const { scrollYProgress } = useScroll({
+    target: ref,
+    offset: ["start 95%", "start 62%"]
+  });
+  const opacity = useTransform(scrollYProgress, [0, 1], [0.2, 1]);
+  const y = useTransform(scrollYProgress, [0, 1], [26, 0]);
+
+  return (
+    <motion.article
+      ref={ref}
+      className="statItem"
+      style={{ opacity: reduceMotion ? 1 : opacity, y: reduceMotion ? 0 : y }}
+    >
+      <CountUp value={item.value} />
+      <h2>{item.title}</h2>
+      <p>{item.text}</p>
+    </motion.article>
+  );
+}
+
 export function Stats() {
   return (
     <section className="statsSection" aria-label="Datos del estudio">
       <div className="container statsGrid">
-        {stats.map((item) => (
-          <article key={item.title} className="statItem">
-            <CountUp value={item.value} />
-            <h2>{item.title}</h2>
-            <p>{item.text}</p>
-          </article>
-        ))}
+        {stats.map((item) => <StatItem key={item.title} item={item} />)}
       </div>
     </section>
   );
