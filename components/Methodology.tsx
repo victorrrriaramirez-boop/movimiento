@@ -15,9 +15,8 @@ export function Methodology() {
     offset: ["start end", "end start"]
   });
 
-  const backgroundY = useTransform(scrollYProgress, [0, 1], ["-5%", "5%"]);
-  const backgroundX = useTransform(scrollYProgress, [0, 1], ["-1.5%", "1.5%"]);
-  const backgroundScale = useTransform(scrollYProgress, [0, 0.5, 1], [1.12, 1.06, 1.10]);
+  const backgroundY = useTransform(scrollYProgress, [0, 1], ["-2.4%", "2.4%"]);
+  const backgroundScale = useTransform(scrollYProgress, [0, 0.5, 1], [1.055, 1.02, 1.04]);
 
   return (
     <section ref={ref} className="methodologySection" id="metodologia" aria-labelledby="methodology-label">
@@ -26,7 +25,6 @@ export function Methodology() {
           className="methodologyImageMotion"
           style={{
             y: reduceMotion ? 0 : backgroundY,
-            x: reduceMotion ? 0 : backgroundX,
             scale: reduceMotion ? 1 : backgroundScale
           }}
         >
@@ -51,10 +49,10 @@ export function Methodology() {
             <motion.article
               key={step.number}
               className="methodologyStep"
-              initial={reduceMotion ? false : { opacity: 0, y: 32 }}
+              initial={reduceMotion ? false : { opacity: 0, y: 22 }}
               whileInView={reduceMotion ? undefined : { opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-100px" }}
-              transition={{ duration: 0.65, delay: reduceMotion ? 0 : index * 0.1, ease: easing }}
+              transition={{ duration: 0.9, delay: reduceMotion ? 0 : index * 0.12, ease: easing }}
             >
               <span className="methodNumber">{step.number}</span>
               <h2>{step.title}</h2>

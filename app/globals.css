@@ -176,7 +176,7 @@ img { max-width: 100%; }
 .heroStory {
   position: relative;
   width: 100%;
-  height: 185vh;
+  height: 240vh;
   background: #000;
 }
 .heroSticky {
@@ -196,7 +196,7 @@ img { max-width: 100%; }
   inset: 0;
 }
 .heroMediaLayer {
-  inset: -7%;
+  inset: -5%;
   will-change: transform, opacity;
   transform: translateZ(0);
   backface-visibility: hidden;
@@ -279,7 +279,7 @@ img { max-width: 100%; }
 .beforeAfterStory {
   position: relative;
   width: 100%;
-  height: 300vh;
+  height: 360vh;
   background: #050505;
 }
 .interventionSticky {
@@ -298,6 +298,7 @@ img { max-width: 100%; }
   inset: 0;
 }
 .interventionImageLayer {
+  inset: -3%;
   will-change: transform, opacity;
   transform: translateZ(0);
 }
@@ -397,7 +398,7 @@ img { max-width: 100%; }
 }
 .methodologyImageMotion {
   position: absolute;
-  inset: -7%;
+  inset: -4%;
   will-change: transform;
   transform: translateZ(0);
   backface-visibility: hidden;
@@ -500,17 +501,17 @@ img { max-width: 100%; }
 .galleryTall { grid-column: span 4; aspect-ratio: 4/5; }
 .materialMotionLayer {
   position: absolute;
-  inset: -6%;
+  inset: -3%;
   will-change: transform;
   transform: translateZ(0);
   backface-visibility: hidden;
 }
 .materialImage {
-  transition: transform .6s cubic-bezier(.2,.8,.2,1);
+  transition: transform .8s cubic-bezier(.22,1,.36,1);
   will-change: transform;
   transform: translateZ(0) scale(1.001);
 }
-.materialCard:hover .materialImage { transform: translateZ(0) scale(1.035); }
+.materialCard:hover .materialImage { transform: translateZ(0) scale(1.02); }
 .materialCard figcaption {
   position: absolute;
   left: 1rem;
@@ -622,7 +623,7 @@ img { max-width: 100%; }
 .pageHeroMedia { position: absolute; inset: 0; opacity: .7; overflow: hidden; }
 .pageHeroMotionLayer {
   position: absolute;
-  inset: -7%;
+  inset: -4%;
   will-change: transform;
   transform: translateZ(0);
   backface-visibility: hidden;
@@ -700,14 +701,14 @@ img { max-width: 100%; }
   .mobileMenu.isOpen { max-height: 380px; opacity: 1; }
   .brand { font-size: .78rem; }
 
-  .heroStory { height: 165vh; }
+  .heroStory { height: 200vh; }
   .heroSticky { min-height: 100svh; height: 100svh; }
-  .heroMediaLayer { inset: -10% -16%; }
+  .heroMediaLayer { inset: -7% -10%; }
   .heroContent { padding-top: calc(var(--header-height) + 2rem); padding-bottom: 3rem; }
   .heroStory h1 { font-size: clamp(2.25rem, 11vw, 3.2rem); }
   .heroContent > p { max-width: 520px; margin-bottom: 2rem; }
 
-  .beforeAfterStory { height: 250vh; background: var(--surface); }
+  .beforeAfterStory { height: 300vh; background: var(--surface); }
   .interventionSticky {
     display: grid;
     grid-template-rows: 56vh 44vh;

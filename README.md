@@ -11,9 +11,9 @@ Web de arquitectura y reformas preparada para producción con Next.js 15, React 
 - `priority` reservado exclusivamente para la imagen LCP del hero.
 - `placeholder="blur"` y `blurDataURL` local para el resto de imágenes.
 - Hero con parallax ligado al scroll y fade progresivo del contenido.
-- "Secuencia de intervención" reconstruida como experiencia sticky de 300vh (250vh en móvil), con crossfade continuo, zoom sutil y barra de progreso ligada al scroll.
+- "Secuencia de intervención" ajustada a una experiencia sticky más lenta de 360vh (300vh en móvil), con crossfade amplio, zoom contenido y barra de progreso ligada al scroll.
 - Metodología con entradas `whileInView` escalonadas.
-- Galería con fade-in escalonado y zoom hover de 0.6s.
+- Galería con fade-in escalonado más pausado y zoom hover sutil de 0.8s.
 - Cifras con contador ascendente al entrar en viewport.
 - Compatibilidad con `prefers-reduced-motion`, mostrando una alternativa estática para la secuencia sticky.
 
@@ -63,6 +63,6 @@ Los archivos utilizados por la interfaz están en:
 
 No hay `remotePatterns` de Google ni imágenes dependientes de Google Stitch.
 
-## V5: movimiento visual ligado al scroll
+## V6: movimiento más lento y editorial
 
-La portada, la secuencia de intervención, la metodología, la galería y las cabeceras interiores incorporan ahora zoom, paneo y parallax continuos ligados directamente al scroll. La portada cambia además entre tres fotografías mediante crossfade. Consulta `SCROLL_ZOOM_V5.md` para el detalle.
+La portada y la secuencia de intervención tienen ahora recorridos más largos, zoom más contenido y paneos mínimos. Se han eliminado movimientos horizontales innecesarios en metodología, galería y cabeceras interiores para mantener una composición más limpia. Consulta `SCROLL_MOTION_V6.md` para el detalle.

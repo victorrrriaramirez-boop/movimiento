@@ -31,11 +31,10 @@ export function PageHero({
     offset: ["start start", "end start"]
   });
 
-  const imageY = useTransform(scrollYProgress, [0, 1], ["0%", "12%"]);
-  const imageX = useTransform(scrollYProgress, [0, 1], ["-1%", "1%"]);
-  const imageScale = useTransform(scrollYProgress, [0, 1], [1.10, 1.02]);
-  const copyY = useTransform(scrollYProgress, [0, 1], [0, -34]);
-  const copyOpacity = useTransform(scrollYProgress, [0, 0.72, 1], [1, 0.92, 0]);
+  const imageY = useTransform(scrollYProgress, [0, 1], ["0%", "5%"]);
+  const imageScale = useTransform(scrollYProgress, [0, 1], [1.055, 1.015]);
+  const copyY = useTransform(scrollYProgress, [0, 1], [0, -20]);
+  const copyOpacity = useTransform(scrollYProgress, [0, 0.82, 1], [1, 0.98, 0]);
 
   return (
     <section ref={ref} className="pageHero">
@@ -44,7 +43,6 @@ export function PageHero({
           className="pageHeroMotionLayer"
           style={{
             y: reduceMotion ? 0 : imageY,
-            x: reduceMotion ? 0 : imageX,
             scale: reduceMotion ? 1 : imageScale
           }}
         >

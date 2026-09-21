@@ -16,9 +16,8 @@ function MaterialCard({ item, index, reduceMotion }: { item: GalleryItem; index:
     offset: ["start end", "end start"]
   });
 
-  const imageY = useTransform(scrollYProgress, [0, 1], ["-4%", "4%"]);
-  const imageX = useTransform(scrollYProgress, [0, 1], [index % 2 === 0 ? "-1.5%" : "1.5%", index % 2 === 0 ? "1.5%" : "-1.5%"]);
-  const imageScale = useTransform(scrollYProgress, [0, 0.5, 1], [1.10, 1.04, 1.08]);
+  const imageY = useTransform(scrollYProgress, [0, 1], ["-2%", "2%"]);
+  const imageScale = useTransform(scrollYProgress, [0, 0.5, 1], [1.045, 1.015, 1.035]);
 
   const sizes = item.className === "galleryWide"
     ? "(max-width: 767px) 100vw, (max-width: 1199px) 58vw, 760px"
@@ -30,16 +29,15 @@ function MaterialCard({ item, index, reduceMotion }: { item: GalleryItem; index:
     <motion.figure
       ref={ref}
       className={`materialCard ${item.className}`}
-      initial={reduceMotion ? false : { opacity: 0, y: 24 }}
+      initial={reduceMotion ? false : { opacity: 0, y: 18 }}
       whileInView={reduceMotion ? undefined : { opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-80px" }}
-      transition={{ duration: 0.6, delay: reduceMotion ? 0 : index * 0.08, ease: easing }}
+      transition={{ duration: 0.85, delay: reduceMotion ? 0 : index * 0.07, ease: easing }}
     >
       <motion.div
         className="materialMotionLayer"
         style={{
           y: reduceMotion ? 0 : imageY,
-          x: reduceMotion ? 0 : imageX,
           scale: reduceMotion ? 1 : imageScale
         }}
       >

@@ -1,14 +1,21 @@
-# Validación V5
+# Validación V6
 
-Se han revisado las referencias de imágenes, el uso de `next/image`, los estilos responsive y la ausencia de URLs de Google Stitch en el código del proyecto.
+Se han comprobado de forma estática los cambios de esta versión:
 
-El comando `npm run build` no puede ejecutarse en este entorno porque las dependencias del proyecto no están instaladas. Se intentó `npm install`, pero el acceso al registro npm agotó el tiempo de espera. Por ello `next` no está disponible localmente en esta sesión.
+- balance correcto de llaves en CSS y componentes TSX modificados;
+- imágenes locales servidas con `next/image`;
+- animaciones limitadas a `transform` y `opacity`;
+- recorridos responsive actualizados a 240/200vh para hero y 360/300vh para la secuencia de intervención;
+- `prefers-reduced-motion` conserva la alternativa estática;
+- no se han añadido nuevas dependencias.
 
-En GitHub/Vercel, con acceso normal al registro npm, la secuencia esperada es:
+También se intentó instalar las dependencias para ejecutar el build real, pero `npm install` agotó el tiempo de espera de red en este entorno. El `tsc` global no puede validar el proyecto sin `node_modules` porque no dispone de los tipos de Next.js, React y Framer Motion.
+
+Con acceso normal al registro npm, la comprobación final prevista es:
 
 ```bash
 npm install
 npm run build
 ```
 
-El workflow incluido en `.github/workflows/build.yml` realiza esa comprobación automáticamente.
+El workflow de `.github/workflows/build.yml` sigue ejecutando esa validación automáticamente en GitHub.

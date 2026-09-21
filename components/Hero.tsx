@@ -16,27 +16,28 @@ export function Hero() {
     offset: ["start start", "end end"]
   });
 
-  // Continuous Apple-style image choreography: zoom out, drift and crossfade.
-  const opacity0 = useTransform(scrollYProgress, [0, 0.28, 0.45], [1, 1, 0]);
-  const opacity1 = useTransform(scrollYProgress, [0.28, 0.45, 0.62, 0.80], [0, 1, 1, 0]);
-  const opacity2 = useTransform(scrollYProgress, [0.62, 0.80, 1], [0, 1, 1]);
+  // Deliberately slow, restrained choreography. The longer section height in CSS
+  // gives every transform more physical scroll distance without adding lag.
+  const opacity0 = useTransform(scrollYProgress, [0, 0.32, 0.50], [1, 1, 0]);
+  const opacity1 = useTransform(scrollYProgress, [0.32, 0.50, 0.60, 0.78], [0, 1, 1, 0]);
+  const opacity2 = useTransform(scrollYProgress, [0.60, 0.78, 1], [0, 1, 1]);
 
-  const scale0 = useTransform(scrollYProgress, [0, 0.45], [1.14, 1.02]);
-  const scale1 = useTransform(scrollYProgress, [0.28, 0.80], [1.12, 1.01]);
-  const scale2 = useTransform(scrollYProgress, [0.62, 1], [1.12, 1.02]);
+  const scale0 = useTransform(scrollYProgress, [0, 0.50], [1.07, 1.015]);
+  const scale1 = useTransform(scrollYProgress, [0.32, 0.78], [1.06, 1.01]);
+  const scale2 = useTransform(scrollYProgress, [0.60, 1], [1.055, 1.0]);
 
-  const x0 = useTransform(scrollYProgress, [0, 0.45], ["-2.5%", "1.5%"]);
-  const x1 = useTransform(scrollYProgress, [0.28, 0.80], ["2%", "-1.5%"]);
-  const x2 = useTransform(scrollYProgress, [0.62, 1], ["-1.5%", "1%"]);
+  const x0 = useTransform(scrollYProgress, [0, 0.50], ["-0.7%", "0.4%"]);
+  const x1 = useTransform(scrollYProgress, [0.32, 0.78], ["0.5%", "-0.4%"]);
+  const x2 = useTransform(scrollYProgress, [0.60, 1], ["-0.4%", "0.25%"]);
 
-  const y0 = useTransform(scrollYProgress, [0, 0.45], ["2.5%", "-1.5%"]);
-  const y1 = useTransform(scrollYProgress, [0.28, 0.80], ["-2%", "1.5%"]);
-  const y2 = useTransform(scrollYProgress, [0.62, 1], ["2%", "-1%"]);
+  const y0 = useTransform(scrollYProgress, [0, 0.50], ["1.4%", "-0.5%"]);
+  const y1 = useTransform(scrollYProgress, [0.32, 0.78], ["-0.8%", "0.55%"]);
+  const y2 = useTransform(scrollYProgress, [0.60, 1], ["0.9%", "-0.35%"]);
 
-  const contentY = useTransform(scrollYProgress, [0, 0.5], [0, -52]);
-  const contentOpacity = useTransform(scrollYProgress, [0, 0.22, 0.48], [1, 0.92, 0]);
-  const hintOpacity = useTransform(scrollYProgress, [0, 0.18, 0.35], [1, 0.6, 0]);
-  const overlayOpacity = useTransform(scrollYProgress, [0, 0.48, 1], [1, 0.82, 0.66]);
+  const contentY = useTransform(scrollYProgress, [0, 0.58], [0, -28]);
+  const contentOpacity = useTransform(scrollYProgress, [0, 0.32, 0.58], [1, 0.98, 0]);
+  const hintOpacity = useTransform(scrollYProgress, [0, 0.25, 0.45], [1, 0.72, 0]);
+  const overlayOpacity = useTransform(scrollYProgress, [0, 0.55, 1], [1, 0.92, 0.82]);
 
   const opacities = [opacity0, opacity1, opacity2];
   const scales = [scale0, scale1, scale2];
